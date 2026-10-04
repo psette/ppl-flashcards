@@ -1,6 +1,6 @@
 # Private Pilot Flashcards
 
-Flashcards and practice tests for the FAA Private Pilot (Airplane) knowledge test.
+Exam-format practice for the FAA Private Pilot (Airplane) knowledge test: 511 three-choice questions, including the 61 questions of the FAA published sample exam with their figures from the FAA testing supplement (FAA-CT-8080-2H).
 
 Open it here: https://psette.github.io/ppl-flashcards/
 

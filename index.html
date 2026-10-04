@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="PPL Cards">
-<meta name="description" content="450 flashcards and practice tests for the FAA Private Pilot knowledge test.">
+<meta name="description" content="511 exam-format questions, including the FAA's official sample exam with figures, for the Private Pilot knowledge test.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23B71C5B'/%3E%3Cpath d='M12 42 L54 22 L34 46 L30 36 Z' fill='white'/%3E%3C/svg%3E">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
 <title>Private Pilot Flashcards</title>
@@ -141,6 +141,19 @@ td.num,th.num{text-align:right;white-space:nowrap}
 .exp .ask .btn{flex:0 0 auto;min-height:0;padding:8px 14px}
 textarea.code{width:100%;min-height:72px;border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--bg);color:var(--ink);font:12px/1.4 "IBM Plex Mono",monospace;resize:vertical}
 .tile p{margin:0;color:var(--muted);font-size:14px}
+
+.figs{display:flex;flex-direction:column;gap:8px}
+.fig{margin:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff;cursor:zoom-in}
+.fig img{display:block;width:100%;max-height:440px;object-fit:contain;background:#fff}
+.fig figcaption{font-size:12px;color:var(--muted);padding:6px 10px;background:var(--surface2)}
+.overlay{position:fixed;inset:0;background:rgba(8,10,14,.94);z-index:50;display:flex;flex-direction:column}
+.overlay .bar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 14px;padding-top:calc(10px + env(safe-area-inset-top,0px));color:#fff;font-size:14px}
+.overlay .bar button{border:1px solid rgba(255,255,255,.4);background:transparent;color:#fff;border-radius:8px;padding:6px 12px;cursor:pointer;flex:0 0 auto}
+.ovscroll{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;padding-bottom:env(safe-area-inset-bottom,0px)}
+.ovscroll img{display:block;width:100%;max-width:none;background:#fff;cursor:zoom-in}
+.ovscroll img.big{width:230%;cursor:zoom-out}
+.badge{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.04em;border:1px solid var(--line);border-radius:6px;padding:1px 6px;color:var(--muted);margin-left:8px;vertical-align:middle}
+.src-row{display:flex;gap:8px 14px;flex-wrap:wrap;align-items:center}
 </style>
 </head>
 <body>
@@ -162,7 +175,7 @@ textarea.code{width:100%;min-height:72px;border:1px solid var(--line);border-rad
   <div class="foot">
     <p>Regulations cited are 14 CFR Parts 61 and 91, NTSB Part 830, and the AIM, as of 2026. Passing score on the FAA test is 70%: 42 of 60 questions in 2.5 hours.</p>
     <p>Progress is saved as you go. On the Progress tab you can copy a progress code to carry it to another device.</p>
-    <p>Shortcuts: <b>Space</b> shows the answer, <b>1</b> missed, <b>2</b> got it. In a test, <b>1 2 3</b> pick an answer and <b>Enter</b> moves on.</p>
+    <p>Every question is in the real test's format: three choices, one correct. Shortcuts: <b>1 2 3</b> (or A B C) pick an answer, <b>Enter</b> moves on. Figures are from the FAA testing supplement (FAA-CT-8080-2H); tap one to enlarge.</p>
   </div>
 </div>
 <script type="text/plain" id="deck">
@@ -2436,6 +2449,451 @@ A: Level off or climb slightly to relieve the pressure, try the Valsalva maneuve
 X: Descend faster to get on the ground quickly || Open the window to equalize the cabin
 E: PHAK chapter 17.
 
+#T Regulations
+Q: Maintenance records show the last transponder inspection was performed on September 1, 2014. The next inspection will be due no later than
+A: September 30, 2016.
+X: September 30, 2015. || September 1, 2016.
+E: 14 CFR 91.413: transponder tests are due every 24 calendar months, so the inspection done September 1, 2014 is good through the last day of September 2016.
+S: faa 1
+
+#T Regulations
+Q: With respect to the certification of airmen, which are categories of aircraft?
+A: Airplane, rotorcraft, glider, lighter-than-air.
+X: Gyroplane, helicopter, airship, free balloon. || Single-engine land and sea, multiengine land and sea.
+E: For airman certification the categories are airplane, rotorcraft, glider, lighter-than-air (and powered lift, weight-shift, powered parachute). Single-engine land is a class; gyroplane and helicopter are classes of rotorcraft.
+S: faa 2
+
+#T Airport Ops & Communications
+Q: A flashing white light signal from the control tower to a taxiing aircraft is an indication to
+A: return to the starting point on the airport.
+X: taxi at a faster speed. || taxi only on taxiways and not cross runways.
+E: AIM 4-3-13. Flashing white is a ground-only signal: return to your starting point on the airport.
+S: faa 3
+
+#T Airspace
+Q: During operations outside controlled airspace at altitudes of more than 1,200 feet AGL, but less than 10,000 feet MSL, the minimum flight visibility for day VFR flight is
+A: 1 mile.
+X: 3 miles. || 5 miles.
+E: 14 CFR 91.155. Class G, more than 1,200 ft AGL and below 10,000 ft MSL, day: 1 SM and 500 below, 1,000 above, 2,000 horizontal. At night it becomes 3 SM.
+S: faa 4
+
+#T Airspace
+Q: Unless otherwise authorized, two-way radio communications with Air Traffic Control are required for landings or takeoffs at all towered airports
+A: regardless of weather conditions.
+X: only when weather conditions are less than VFR. || within Class D airspace only when weather conditions are less than VFR.
+E: 14 CFR 91.129. At a towered airport two-way radio communications are required for takeoff and landing whatever the weather; the weather only decides whether you also need a Special VFR clearance.
+S: faa 5
+
+#T Airspace
+Q: During operations outside controlled airspace at altitudes of more than 1,200 feet AGL, but less than 10,000 feet MSL, the minimum distance below clouds requirement for VFR flight at night is
+A: 500 feet.
+X: 1,000 feet. || 1,500 feet.
+E: 14 CFR 91.155. Above 1,200 ft AGL and below 10,000 ft MSL in Class G the cloud clearance is 500 below, 1,000 above and 2,000 horizontal, day or night; only the visibility changes at night.
+S: faa 6
+
+#T Airspace
+Q: Two-way radio communication must be established with the Air Traffic Control facility having jurisdiction over the area prior to entering which class airspace?
+A: Class C.
+X: Class E. || Class G.
+E: 14 CFR 91.130. Class C (and D) require two-way communications established before entry. Class E and G require no radio contact.
+S: faa 7
+
+#T Regulations
+Q: Pre-takeoff briefing of passengers about the use of seat belts for a flight is the responsibility of
+A: the pilot in command.
+X: all passengers. || the right seat pilot.
+E: 14 CFR 91.107. The pilot in command must ensure every person is briefed on fastening and unfastening the seat belt and shoulder harness.
+S: faa 8
+
+#T Regulations
+Q: A 100-hour inspection was due at 3302.5 hours. The 100-hour inspection was actually done at 3309.5 hours. When is the next 100-hour inspection due?
+A: 3402.5 hours.
+X: 3312.5 hours. || 3395.5 hours.
+E: 14 CFR 91.409(b). The 10-hour overrun to reach the inspection is allowed, but the excess counts toward the next 100 hours, so the next inspection is due at 3402.5, not 3409.5.
+S: faa 9
+
+#T Weather Reports & Forecasts
+Q: When speaking to a flight service weather briefer, you should state
+A: whether the flight is VFR or IFR.
+X: the pilot in command`s full name and address. || a summary of your qualifications.
+E: AIM 7-1-5. Tell the briefer your qualifications, aircraft number and type, whether VFR or IFR, departure point, route, destination, altitude, ETD and ETE. Among these choices, VFR or IFR is the one the briefer needs.
+S: faa 10
+
+#T Weather
+Q: Why is frost considered hazardous to flight?
+A: Frost spoils the smooth flow of air over the wings, thereby decreasing lifting capability.
+X: Frost changes the basic aerodynamic shape of the airfoils, thereby increasing lift. || Frost slows the airflow over the airfoils, thereby increasing control effectiveness.
+E: Frost does not change the airfoil shape much, but it spoils the smooth flow of air over the wing, reducing lift and raising the stall speed. Remove all frost before takeoff.
+S: faa 11
+
+#T Weather Reports & Forecasts
+Q: (Refer to FAA-CT-8080-2H, Figure 17.) What wind is forecast for STL at 12,000 feet?
+A: 230° true at 39 knots.
+X: 230° true at 56 knots. || 230° magnetic at 56 knots.
+E: Winds aloft are given in true direction and knots. Read the STL line at the 12,000 ft column: 2339-04 means 230 degrees true at 39 knots, temperature -4 C.
+S: faa 12
+F: fig17
+
+#T Weather
+Q: The mature stage of a thunderstorm begins with
+A: the start of precipitation.
+X: formation of the anvil top. || continuous downdrafts.
+E: The mature stage begins when precipitation starts falling from the cloud base; it brings both updrafts and downdrafts and is the most violent stage. The anvil and continuous downdrafts mark dissipation.
+S: faa 13
+
+#T Performance & Weight/Balance
+Q: (Refer to FAA-CT-8080-2H, Figures 32 and 33.) Which action can adjust the airplane`s weight to maximum gross weight and the CG within limits for takeoff? Front seat occupants:  425 lb Rear seat occupants:  300 lb Fuel, main tanks:  44 gal
+A: Drain 12 gallons of fuel.
+X: Drain 9 gallons of fuel. || Transfer 12 gallons of fuel from the main tanks to the auxiliary tanks.
+E: Add up the loading from Figure 33 (empty weight, oil, 425 lb front, 300 lb rear, 44 gal = 264 lb of fuel): the total is over the 2,950 lb maximum by about 70 lb, which is 12 gallons at 6 lb per gallon. Draining 12 gallons brings weight and moment inside the Figure 32 envelope; 9 gallons is not enough and moving fuel aft does not reduce weight.
+S: faa 14
+F: fig32 fig33
+
+#T Airspace
+Q: What action should a pilot take when operating under VFR in a Military Operations Area (MOA)?
+A: Exercise extreme caution when military activity is being conducted.
+X: Obtain a clearance from the controlling agency prior to entering the MOA. || Operate only on the airways that transverse the MOA.
+E: AIM 3-4-5. VFR flight in an MOA is permitted without a clearance, but military aircraft may be maneuvering at high speed, so exercise extreme caution and check with FSS or the controlling agency for activity.
+S: faa 15
+
+#T Airport Ops & Communications
+Q: Unless otherwise authorized, if flying a transponder equipped aircraft, a pilot should squawk which VFR code?
+A: 1200
+X: 7600 || 7700
+E: AIM 4-1-20. 1200 is the VFR code. 7600 is lost communications and 7700 is an emergency.
+S: faa 16
+
+#T Aerodynamics
+Q: What is one purpose of wing flaps?
+A: To enable the pilot to make steeper approaches to a landing without increasing the airspeed.
+X: To relieve the pilot of maintaining continuous pressure on the controls. || To decrease wing area to vary the lift.
+E: Flaps increase lift and drag, which lets you fly a steeper approach at the same airspeed. Trim relieves control pressures, and flaps increase rather than decrease effective wing area.
+S: faa 17
+
+#T Systems & Instruments
+Q: With regard to carburetor ice, float-type carburetor systems in comparison to fuel injection systems are generally considered to be
+A: more susceptible to icing.
+X: equally susceptible to icing. || less susceptible to icing.
+E: The venturi and fuel vaporization in a float-type carburetor cool the air by up to 70 degrees F, so it is far more prone to icing than a fuel-injection system.
+S: faa 18
+
+#T Systems & Instruments
+Q: What does the red line on an airspeed indicator represent?
+A: Never-exceed speed.
+X: Maneuvering speed. || Turbulent or rough-air speed.
+E: The red line is Vne, the never-exceed speed. The yellow arc is the caution range for smooth air only, and maneuvering speed is not marked on the dial.
+S: faa 19
+
+#T Airport Ops & Communications
+Q: (Refer to FAA-CT-8080-2H, Figure 48.) The portion of the runway identified by the letter A may be used for
+A: taxiing and takeoff.
+X: landing. || taxiing and landing.
+E: Area A is the pavement before a displaced threshold (arrows pointing to the threshold bar). It may be used for taxiing, takeoff, and landing rollout from the other direction, but not for landing.
+S: faa 20
+F: fig48
+
+#T Airport Ops & Communications
+Q: (Refer to FAA-CT-8080-2H, Figure 47.) While on final approach to a runway equipped with a standard 2-bar VASI, the lights appear as shown by illustration D. This means that the aircraft is
+A: below the glide path.
+X: above the glide path. || on the glide path.
+E: Illustration D shows both bars red. Two-bar VASI: red over white is on the glide path, white over white is above, red over red is below (red over red, you are dead).
+S: faa 21
+F: fig47
+
+#T Airport Ops & Communications
+Q: Who has final authority to accept or decline any land and hold short (LAHSO) clearance?
+A: Pilot in command.
+X: Air Traffic Controller. || Second in command.
+E: AIM 4-3-11. The pilot in command has the final authority to accept or decline any LAHSO clearance; decline if there is any doubt.
+S: faa 22
+
+#T Performance & Weight/Balance
+Q: (Refer to FAA-CT-8080-2H, Figure 38.) Determine the approximate landing ground roll distance. Pressure altitude:  5,000 ft Headwind:  Calm Temperature:  101°F
+A: 545 feet.
+X: 445 feet. || 495 feet.
+E: Figure 38 lists 495 ft ground roll at 5,000 ft and 41 F (standard). The note says to add 10 percent for each 60 F above standard: 101 F is 60 F above, so 495 x 1.10 = 545 ft.
+S: faa 23
+F: fig38
+
+#T Performance & Weight/Balance
+Q: (Refer to FAA-CT-8080-2H, Figure 38.) Determine the total distance required to land over a 50-foot obstacle. Pressure altitude:  5,000 ft Headwind:  8 kts Temperature:  41°F Runway:  Hard surface
+A: 956 feet.
+X: 837 feet. || 1,076 feet.
+E: Figure 38 lists 1,195 ft to clear a 50 ft obstacle at 5,000 ft and 41 F. The note says to decrease the distance 10 percent for each 4 knots of headwind: 8 knots is 20 percent, so 1,195 x 0.80 = 956 ft.
+S: faa 24
+F: fig38
+
+#T Performance & Weight/Balance
+Q: (Refer to FAA-CT-8080-2H, Figure 35.) Determine the approximate manifold pressure setting with 2,450 RPM to achieve 65 percent maximum continuous power at 6,500 feet with a temperature of 36°F higher than standard.
+A: 21.0 inches Hg.
+X: 19.8 inches Hg. || 20.8 inches Hg.
+E: Use the ISA +20 C (+36 F) block of Figure 35. At 6,000 ft the manifold pressure is 21.0 in Hg and at 8,000 ft it is 20.8, so 6,500 ft interpolates to about 20.95, which rounds to 21.0 in Hg.
+S: faa 25
+F: fig35
+
+#T Aerodynamics
+Q: The term 'angle of attack' is defined as the angle between the
+A: chord line of the wing and the relative wind.
+X: airplane's longitudinal axis and that of the air striking the airfoil. || airplane's center line and the relative wind.
+E: Angle of attack is the angle between the chord line of the wing and the relative wind. It is not referenced to the fuselage or the horizon.
+S: faa 26
+
+#T Navigation & Charts
+Q: When the course deviation indicator (CDI) needle is centered using a VOR test signal (VOT), the omnibearing selector (OBS) and the TO/FROM indicator should read
+A: 0° FROM or 180° TO, regardless of the pilot`s position from the VOT.
+X: 180° FROM, only if the pilot is due north of the VOT. || 0° TO or 180° FROM, regardless of the pilot`s position from the VOT.
+E: AIM 1-1-4. With a VOT the CDI centers with the OBS on 0 degrees FROM or 180 degrees TO, no matter where the aircraft is. Memory aid: Cessna 182 (180 TO).
+S: faa 27
+
+#T Airspace
+Q: (Refer to FAA-CT-8080-2H, Figure 26, area 2.) The day VFR visibility and cloud clearance requirements to operate over the town of Cooperstown, after departing and climbing out of the Cooperstown Airport at or below 700 feet AGL are
+A: 1 mile and clear of clouds.
+X: 1 mile and 1,000 feet above, 500 feet below, and 2,000 feet horizontally from clouds. || 3 miles and clear of clouds.
+E: Cooperstown sits inside a magenta vignette, so Class E begins at 700 ft AGL and the airspace at or below 700 ft is Class G. Day VFR in Class G at or below 1,200 ft AGL needs 1 mile visibility and clear of clouds.
+S: faa 28
+F: fig26
+
+#T Airport Ops & Communications
+Q: (Refer to FAA-CT-8080-2H, Figure 52.) What is the recommended communications procedure for landing at Lincoln Municipal during the hours when the tower is not in operation?
+A: Monitor airport traffic and announce your position and intentions on 118.5 MHz.
+X: Contact UNICOM on 122.95 MHz for traffic advisories. || Monitor ATIS for airport conditions, then announce your position on 122.95 MHz.
+E: When the tower is closed its frequency becomes the CTAF (118.5 in the Chart Supplement entry). Self-announce your position and intentions on it; UNICOM on 122.95 is for airport information, not traffic.
+S: faa 29
+F: fig52
+
+#T Navigation & Charts
+Q: (Refer to FAA-CT-8080-2H, Figure 25, area 5.) The navigation facility at Dallas-Ft. Worth International (DFW) is a
+A: VORTAC.
+X: VOR. || VOR/DME.
+E: The DFW navaid symbol in Figure 25 is a VORTAC (hexagon with three filled wings). A VOR/DME is a hexagon inside a square and a plain VOR is a hexagon.
+S: faa 30
+F: fig25
+
+#T Navigation & Charts
+Q: (Refer to FAA-CT-8080-2H, Figure 52.) Where is Loup City Municipal located in relation to the city?
+A: Northwest approximately 1 mile.
+X: Northeast approximately 3 miles. || East approximately 7 miles.
+E: The Chart Supplement entry for Loup City Municipal gives the airport location relative to the city as 1 NW, that is 1 mile northwest.
+S: faa 31
+F: fig52
+
+#T Airport Ops & Communications
+Q: (Refer to FAA-CT-8080-2H, Figure 52.) When approaching Lincoln Municipal from the west at noon for the purpose of landing, initial communications should be with
+A: Lincoln Approach Control on 124.0 MHz.
+X: Minneapolis Center on 128.75 MHz. || Lincoln Tower on 118.5 MHz.
+E: Arriving from the west at noon, the tower and approach control are open; the Chart Supplement lists Lincoln Approach on 124.0 for the west sector, so initial contact is with approach control.
+S: faa 32
+F: fig52
+
+#T Airport Ops & Communications
+Q: (Refer to FAA-CT-8080-2H, Figure 64.) Which marking indicates a vehicle lane?
+A: Marking C
+X: Marking A || Marking E
+E: Marking C in Figure 64 is the vehicle roadway: solid white edge lines with a zipper-style dashed line, which outline a lane for ground vehicles across the ramp. A is a runway holding position sign area and E is the taxiway holding position lines.
+S: faa 33
+F: fig64
+
+#T Aeromedical & ADM
+Q: A pilot and two passengers landed on a 2,100 foot east-west gravel strip with an elevation of 1,800 feet. The temperature is warmer than expected and after computing the density altitude it is determined the takeoff distance over a 50 foot obstacle is 1,980 feet. The airplane is 75 pounds under gross weight. What would be the best choice?
+A: Wait until the temperature decreases, and recalculate the takeoff performance.
+X: Taking off into the headwind will give the extra climb-out time needed. || Try a takeoff without the passengers to make sure the climb is adequate.
+E: The computed takeoff distance (1,980 ft over the obstacle) is close to the runway length (2,100 ft) and conditions are worse than planned. The safe choice is to wait for cooler temperatures and recompute; being 75 lb under gross does not create a margin.
+S: faa 34
+
+#T Systems & Instruments
+Q: If an aircraft is equipped with a fixed-pitch propeller and a float-type carburetor, the first indication of carburetor ice would most likely be
+A: loss of RPM.
+X: a drop in oil temperature and cylinder head temperature. || engine roughness.
+E: With a fixed-pitch propeller, carburetor ice reduces power and the first sign is a loss of RPM; roughness comes later. With a constant-speed propeller the first sign is a drop in manifold pressure.
+S: faa 35
+
+#T Airspace
+Q: (Refer to FAA-CT-8080-2H, Figure 20, area 1.) The NALF Fentress (NFE) Airport is in what type of airspace?
+A: Class E.
+X: Class C. || Class G.
+E: NALF Fentress is inside a dashed magenta line, which marks Class E airspace beginning at the surface. It is not inside the solid magenta Class C rings of Norfolk.
+S: faa 36
+F: fig20
+
+#T Airport Ops & Communications
+Q: While on a VFR cross country and not in contact with ATC, what frequency would you use in the event of an emergency?
+A: 121.5 MHz.
+X: 122.5 MHz. || 128.725 MHz.
+E: 121.5 MHz is the emergency frequency monitored by ATC facilities and many aircraft. 122.5 is a flight service frequency.
+S: faa 37
+
+#T Airport Ops & Communications
+Q: ATC advises, "traffic 12 o'clock." This advisory is relative to your
+A: ground track.
+X: true course. || magnetic heading.
+E: AIM 4-1-15. Radar traffic advisories are given by clock position relative to your ground track, so with a crab angle the traffic may appear off the nose in a different spot.
+S: faa 38
+
+#T Aerodynamics
+Q: Which statement relates to Bernoulli's principle?
+A: Air traveling faster over the curved upper surface of an airfoil causes lower pressure on the top surface.
+X: For every action there is an equal and opposite reaction. || An additional upward force is generated as the lower surface of the airfoil deflects air downward.
+E: Bernoulli: faster airflow over the curved upper surface lowers the pressure there, producing lift. Options A and B describe Newton's third law.
+S: faa 39
+
+#T Systems & Instruments
+Q: Deviation error of the magnetic compass is caused by
+A: certain metals and electrical systems within the aircraft.
+X: a northerly turning error. || the difference in location of true north and magnetic north.
+E: Deviation is compass error from magnetic fields in the aircraft (metal structure, radios, electrical systems), corrected with the compass card. Variation is the difference between true and magnetic north.
+S: faa 40
+
+#T Aerodynamics
+Q: When executing an emergency approach to land in a single-engine airplane, it is important to maintain a constant glide speed because variations in glide speed will
+A: nullify all attempts at accuracy in judgment of gliding distance and landing spot.
+X: increase the chances of shock cooling the engine. || assure the proper descent angle is maintained until entering the flare.
+E: Judging gliding distance and the landing spot depends on a known, steady glide speed. Varying the speed changes the glide angle and makes the judgment unreliable.
+S: faa 41
+
+#T Navigation & Charts
+Q: How far will an aircraft travel in 7.5 minutes with a ground speed of 114 knots?
+A: 14.25 NM.
+X: 15.00 NM. || 14.50 NM.
+E: Distance = speed x time: 114 knots x 7.5/60 hour = 14.25 NM.
+S: faa 42
+
+#T Airspace
+Q: The radius of the procedural outer area of Class C airspace is normally
+A: 20 NM.
+X: 10 NM. || 30 NM.
+E: AIM 3-2-4. The Class C outer area normally extends 20 NM from the primary airport; the charted shelf is 10 NM and the core 5 NM.
+S: faa 43
+
+#T Performance & Weight/Balance
+Q: (Refer to FAA-CT-8080-2H, Figure 8.) What is the effect of a temperature increase from 35 to 50°F on the density altitude if the pressure altitude remains at 3,000 feet MSL?
+A: 1,000-foot increase.
+X: 1,100-foot decrease. || 1,300-foot increase.
+E: On the Figure 8 chart, at 3,000 ft pressure altitude a rise from 35 F to 50 F moves the density altitude from about 2,000 ft to about 3,000 ft, an increase of roughly 1,000 ft.
+S: faa 44
+F: fig8
+
+#T Airport Ops & Communications
+Q: The Aeronautical Information Manual (AIM) specifically encourages pilots to turn on their landing lights when operating below 10,000 feet, day or night, and especially when operating
+A: in conditions of reduced visibility.
+X: in Class B airspace. || within 15 miles of a towered airport.
+E: AIM 4-3-23 (Operation Lights On) recommends landing lights on below 10,000 ft, day or night, especially in reduced visibility and near airports.
+S: faa 45
+
+#T Airport Ops & Communications
+Q: When making routine transponder code changes, pilots should avoid inadvertent selection of which code?
+A: 7500
+X: 7200 || 7000
+E: AIM 4-1-20. When changing codes avoid passing through 7500 (hijack), 7600 (lost communications) and 7700 (emergency), which trigger alerts at ATC.
+S: faa 46
+
+#T Aeromedical & ADM
+Q: A pilot experiencing the effects of hyperventilation should be able to restore the proper carbon dioxide level in the body by
+A: slowing the breathing rate, breathing into a paper bag, or talking aloud.
+X: breathing spontaneously and deeply or gaining mental control of the situation. || increasing the breathing rate in order to increase lung ventilation.
+E: Hyperventilation blows off too much carbon dioxide. Slowing the breathing rate, talking aloud, or breathing into a paper bag restores it.
+S: faa 47
+
+#T Airport Ops & Communications
+Q: This sign confirms your position on
+A: runway 22.
+X: routing to runway 22. || taxiway 22.
+E: A black sign with a yellow inscription is a location sign; a runway location sign tells you which runway you are on. Yellow signs with black letters are directions, and red with white is a holding position.
+S: faa 48
+F: sign22
+
+#T Airport Ops & Communications
+Q: From the cockpit, this marking confirms the aircraft to be
+A: on a runway, about to clear.
+X: on a taxiway, about to enter runway zone. || near an instrument approach clearance zone.
+E: The runway holding position marking has solid lines on the taxiway side and dashed lines on the runway side. When the dashed lines are nearest you, you are on the runway and about to clear it.
+S: faa 49
+F: marking
+
+#T Airspace
+Q: (Refer to FAA-CT-8080-2H, Figure 78.) What are the basic VFR weather minima required to takeoff from the Onawa, IA (K36) airport during the day?
+A: 1 statute mile, clear of clouds.
+X: 3 statute miles visibility, 500 feet below the clouds, 1,000 feet above the clouds, and 2,000 feet horizontally from the clouds. || 0 statute miles, clear of clouds.
+E: Onawa has no surface Class E (no dashed magenta line), so the airport is in Class G. Day VFR in Class G at or below 1,200 ft AGL needs 1 statute mile visibility and clear of clouds.
+S: faa 50
+F: fig78
+
+#T Navigation & Charts
+Q: If Receiver Autonomous Integrity Monitoring (RAIM) capability is lost in-flight,
+A: the pilot has no assurance of the accuracy of the GPS position.
+X: the pilot may still rely on GPS derived altitude for vertical information. || GPS position is reliable provided at least 3 GPS satellites are available.
+E: RAIM monitors satellite integrity. Without it the receiver cannot verify the position, so the pilot has no assurance of its accuracy; three satellites are not enough even for a plain 3D fix.
+S: faa 51
+
+#T Weather Reports & Forecasts
+Q: You plan to phone a weather briefing facility for preflight weather information. You should
+A: identify yourself as a pilot.
+X: provide the number of occupants on board. || begin with your route of flight.
+E: AIM 7-1-5. Begin a briefing request by identifying yourself as a pilot, then give aircraft number, type, VFR or IFR, route, altitude and times.
+S: faa 52
+
+#T Regulations
+Q: Your cousin wants you to take him flying. You must have made at least three takeoffs and three landings in your aircraft within the preceding
+A: 90 days.
+X: 60 days. || 30 days.
+E: 14 CFR 61.57(a). Three takeoffs and landings within the preceding 90 days in the same category, class and type are required before carrying passengers.
+S: faa 53
+
+#T Aerodynamics
+Q: In what flight condition are torque effects more pronounced in a single-engine airplane?
+A: Low airspeed, high power, high angle of attack.
+X: Low airspeed, low power, low angle of attack. || High airspeed, high power, high angle of attack.
+E: Torque, P-factor, spiraling slipstream and gyroscopic precession are all strongest at low airspeed, high power and high angle of attack, such as during takeoff and climb.
+S: faa 54
+
+#T Weather
+Q: The wind at 5,000 feet AGL is southwesterly while the surface wind is southerly. This difference in direction is primarily due to
+A: friction between the wind and the surface.
+X: stronger pressure gradient at higher altitudes. || stronger Coriolis force at the surface.
+E: Surface friction slows the wind below about 2,000 ft AGL, weakening the Coriolis effect, so the surface wind turns across the isobars toward low pressure and differs from the wind aloft.
+S: faa 55
+
+#T Aeromedical & ADM
+Q: Eye movements during daytime collision avoidance scanning should
+A: not exceed 10 degrees and view each sector at least 1 second.
+X: be 30 degrees and view each sector at least 3 seconds. || use peripheral vision by scanning small sectors and utilizing off-center viewing.
+E: AIM 8-1-6. Scan in short, regularly spaced eye movements of no more than 10 degrees, pausing about one second on each sector.
+S: faa 56
+
+#T Weather
+Q: When there is a temperature inversion, you would expect to experience
+A: an increase in temperature as altitude increases.
+X: clouds with extensive vertical development above an inversion aloft. || good visibility in the lower levels of the atmosphere and poor visibility above an inversion aloft.
+E: An inversion is a layer where temperature increases with altitude. It is stable, smooth, and traps haze and smoke, so visibility is poor below it.
+S: faa 57
+
+#T Weather
+Q: When warm, moist, stable air flows upslope, it
+A: produces stratus type clouds.
+X: causes showers and thunderstorms. || develops convective turbulence.
+E: Stable air lifted up a slope produces stratus clouds and steady precipitation. Unstable air would produce cumulus, showers and turbulence.
+S: faa 58
+
+#T Regulations
+Q: Each person who holds a pilot certificate or a medical certificate shall present it for inspection upon the request of any
+A: authorized representative of the Department of Transportation.
+X: person in a position of authority. || local law enforcement officer.
+E: 14 CFR 61.3(l). Certificates must be presented on request of the Administrator (an authorized DOT or FAA representative), the NTSB, or any federal, state or local law enforcement officer. Among these choices the FAA keys the DOT representative.
+S: faa 59
+
+#T Airport Ops & Communications
+Q: The correct method of stating 5,500 feet MSL to ATC is
+A: FIVE THOUSAND FIVE HUNDRED.
+X: FIVE POINT FIVE. || FIFTY-FIVE HUNDRED FEET MSL.
+E: AIM 4-2-9. Altitudes below 18,000 ft are stated in thousands and hundreds: five thousand five hundred.
+S: faa 60
+
+#T Airspace
+Q: Unless otherwise authorized, which situation requires Automatic Dependent Surveillance-Broadcast (ADS-B)?
+A: Overflying Class C airspace below 10,000 feet MSL.
+X: Landing at an airport with an operating control tower. || Flying under the shelf of Class C airspace.
+E: 14 CFR 91.225. ADS-B Out is required in the airspace above Class C up to 10,000 ft MSL, in Class A, B and C, within a Mode C veil, and above 10,000 ft MSL. Flying under a Class C shelf or landing at a tower airport does not by itself require it.
+S: faa 61
+
 </script>
 <script>
 (function(){
@@ -2450,12 +2908,14 @@ function parseDeck(txt){
     var l=line.trim();
     if(!l){flush();return;}
     if(l.indexOf("#T ")===0){flush();var name=l.slice(3).trim();topic=TOPICS.indexOf(name);if(topic<0){TOPICS.push(name);topic=TOPICS.length-1;}return;}
-    var m=l.match(/^([QAXE]):\s*(.*)$/); if(!m) return;
-    if(m[1]==="Q"){flush();cur={t:topic,q:m[2],a:"",x:null,e:""};}
+    var m=l.match(/^([QAXEFS]):\s*(.*)$/); if(!m) return;
+    if(m[1]==="Q"){flush();cur={t:topic,q:m[2],a:"",x:null,e:"",f:null,src:"",n:""};}
     else if(!cur) return;
     else if(m[1]==="A") cur.a=m[2];
     else if(m[1]==="X"){var p=m[2].split("||").map(function(s){return s.trim();}).filter(Boolean); if(p.length>=2) cur.x=p.slice(0,2);}
     else if(m[1]==="E") cur.e=m[2];
+    else if(m[1]==="F") cur.f=m[2].split(/\s+/).filter(Boolean);
+    else if(m[1]==="S"){var sp=m[2].split(/\s+/);cur.src=sp[0];cur.n=sp[1]||"";}
   });
   flush();
 }
@@ -2620,8 +3080,31 @@ function importCode(str){
   }catch(e){ return -1; }
 }
 
+
+/* ---------- figures ---------- */
+var FIGCAP={fig8:"Figure 8, density altitude chart",fig17:"Figure 17, winds and temperatures aloft forecast",fig20:"Figure 20, sectional chart excerpt",fig25:"Figure 25, sectional chart excerpt",fig26:"Figure 26, sectional chart excerpt",fig32:"Figure 32, weight and balance envelope",fig33:"Figure 33, weight and balance loading data",fig35:"Figure 35, cruise power setting table",fig38:"Figure 38, landing distance table",fig47:"Figure 47, VASI indications",fig48:"Figure 48, runway markings",fig52:"Figure 52, Chart Supplement excerpt",fig64:"Figure 64, airport markings",fig78:"Figure 78, sectional chart excerpt",sign22:"Sign shown in the FAA sample exam",marking:"Marking shown in the FAA sample exam"};
+function figCaption(f){ return FIGCAP[f]?((f==="sign22"||f==="marking")?FIGCAP[f]:"FAA-CT-8080-2H "+FIGCAP[f]):f; }
+function figSrc(f){return "figures/"+f+".jpg";}
+function figEl(c){
+  if(!c.f||!c.f.length) return null;
+  var wrap=el("div",{class:"figs"});
+  c.f.forEach(function(f){
+    wrap.appendChild(el("figure",{class:"fig",onclick:function(e){e.stopPropagation();openFig(f);}},[el("img",{src:figSrc(f),alt:figCaption(f),loading:"lazy"}),el("figcaption",{text:figCaption(f)+" · tap to enlarge"})]));
+  });
+  return wrap;
+}
+function openFig(f){
+  var img=el("img",{src:figSrc(f),alt:"",onclick:function(e){e.stopPropagation();img.classList.toggle("big");}});
+  var ov=el("div",{class:"overlay",role:"dialog","aria-label":"Figure"},[
+    el("div",{class:"bar"},[el("span",{text:figCaption(f)+". Tap the image to zoom, drag to pan."}),el("button",{type:"button",onclick:function(){ov.remove();},text:"Close"})]),
+    el("div",{class:"ovscroll"},[img])
+  ]);
+  ov.addEventListener("keydown",function(e){if(e.key==="Escape")ov.remove();});
+  document.body.appendChild(ov); ov.querySelector("button").focus();
+}
+
 /* ---------- ui state ---------- */
-var ui={mode:"study",topic:-1,weak:false,browse:false,cur:null,revealed:false,recent:[],session:{n:0,miss:0},testN:20};
+var ui={mode:"study",topic:-1,weak:false,faa:false,browse:false,cur:null,recent:[],session:{n:0,miss:0},testN:20,testSrc:"all",opts:null,optsFor:null,ci:-1,pick:-1};
 var T=null;
 
 /* ---------- chips ---------- */
@@ -2639,14 +3122,14 @@ function renderChips(){
 }
 
 /* ---------- study ---------- */
-function pool(){return CARDS.filter(function(c){return (ui.topic<0||c.t===ui.topic)&&(!ui.weak||(prog(c).s>0&&prog(c).b<=1));});}
+function pool(){return CARDS.filter(function(c){return (ui.topic<0||c.t===ui.topic)&&(!ui.faa||c.src==="faa")&&(!ui.weak||(prog(c).s>0&&prog(c).b<=1));});}
 function nextCard(){
   var P=pool(); if(!P.length){ui.cur=null;return;}
   var cands=P.filter(function(c){return ui.recent.indexOf(c.id)<0;}); if(cands.length<Math.min(3,P.length)) cands=P;
   var ws=cands.map(function(c){var p=prog(c);return p.s===0?5:[8,4,2,1][p.b];});
   var tot=ws.reduce(function(a,b){return a+b;},0), r=Math.random()*tot, i=0;
   for(;i<cands.length;i++){r-=ws[i];if(r<=0)break;}
-  ui.cur=cands[Math.min(i,cands.length-1)]; ui.revealed=false;
+  ui.cur=cands[Math.min(i,cands.length-1)]; ui.optsFor=null; ui.pick=-1;
   ui.recent.push(ui.cur.id); if(ui.recent.length>8) ui.recent.shift();
 }
 function levelEl(c){
@@ -2654,53 +3137,58 @@ function levelEl(c){
   for(var i=0;i<4;i++) seg.appendChild(el("i",{class:i<=p.b&&p.s>0?"f":""}));
   return el("span",{class:"level"},[seg,el("span",{text:p.s===0?"New":labels[p.b]})]);
 }
+function srcBadge(c){ return c.src==="faa"?el("span",{class:"badge",text:"FAA sample #"+c.n}):null; }
 function renderStudy(){
   var sec=document.getElementById("study"); sec.innerHTML="";
   var P=pool();
   var m=P.filter(function(c){return cat(c)==="m";}).length;
   var row=el("div",{class:"row"},[
-    el("span",{class:"stat",html:"<b>"+P.length+"</b> cards in deck &middot; <b>"+m+"</b> mastered &middot; this session <b>"+ui.session.n+"</b> reviewed, <b>"+ui.session.miss+"</b> missed"}),
-    el("span",{},[
-      el("label",{class:"toggle"},[el("input",{type:"checkbox",id:"weak-toggle",onchange:function(e){ui.weak=e.target.checked;ui.recent=[];ui.cur=null;renderStudy();}}),"Weak cards only"]),
-      "   ",
-      el("button",{type:"button",class:"link",onclick:function(){ui.browse=!ui.browse;renderStudy();},text:ui.browse?"Back to cards":"Browse this deck"})
+    el("span",{class:"stat",html:"<b>"+P.length+"</b> questions in deck &middot; <b>"+m+"</b> mastered &middot; this session <b>"+ui.session.n+"</b> answered, <b>"+ui.session.miss+"</b> missed"}),
+    el("span",{class:"src-row"},[
+      el("label",{class:"toggle"},[el("input",{type:"checkbox",id:"weak-toggle",onchange:function(e){ui.weak=e.target.checked;ui.recent=[];ui.cur=null;renderStudy();}}),"Weak only"]),
+      el("label",{class:"toggle"},[el("input",{type:"checkbox",id:"faa-toggle",onchange:function(e){ui.faa=e.target.checked;ui.recent=[];ui.cur=null;renderStudy();}}),"FAA sample only"]),
+      el("button",{type:"button",class:"link",onclick:function(){ui.browse=!ui.browse;renderStudy();},text:ui.browse?"Back to questions":"Browse this deck"})
     ])
   ]);
-  row.querySelector("#weak-toggle").checked=ui.weak;
+  row.querySelector("#weak-toggle").checked=ui.weak; row.querySelector("#faa-toggle").checked=ui.faa;
   sec.appendChild(row);
   if(ui.browse){ renderBrowse(sec,P); return; }
   if(!ui.cur||P.indexOf(ui.cur)<0) nextCard();
-  if(!ui.cur){ sec.appendChild(el("div",{class:"empty",text:ui.weak?"No weak cards in this deck. Turn off the filter or pick another topic.":"No cards here."})); return; }
+  if(!ui.cur){ sec.appendChild(el("div",{class:"empty",text:ui.weak?"No weak questions in this deck. Turn off the filter or pick another topic.":"No questions here."})); return; }
   var c=ui.cur;
-  var card=el("div",{class:"card"+(ui.revealed?" answered":""),tabindex:"0",role:"button","aria-expanded":ui.revealed?"true":"false",onclick:function(){if(!ui.revealed){ui.revealed=true;renderStudy();}},onkeydown:function(e){if((e.key===" "||e.key==="Enter")&&!ui.revealed){e.preventDefault();ui.revealed=true;renderStudy();}}},[
-    el("div",{class:"head"},[el("span",{class:"eyebrow",text:TOPICS[c.t]}),levelEl(c)]),
+  if(ui.optsFor!==c.id){ var o=[c.a].concat(c.x||[]); var order=shuffle(o.map(function(_,i){return i;})); ui.opts=order.map(function(i){return o[i];}); ui.ci=order.indexOf(0); ui.optsFor=c.id; ui.pick=-1; }
+  var card=el("div",{class:"card answered",style:"cursor:default;min-height:0"},[
+    el("div",{class:"head"},[el("span",{},[el("span",{class:"eyebrow",text:TOPICS[c.t]}),srcBadge(c)]),levelEl(c)]),
+    figEl(c),
     el("div",{class:"q",text:c.q})
   ]);
-  if(ui.revealed){
-    var ans=el("div",{class:"ans"},[el("div",{class:"a",text:c.a})]);
-    if(c.e) ans.appendChild(el("div",{class:"e",text:c.e}));
-    card.appendChild(ans);
-  } else card.appendChild(el("div",{class:"hint",text:"Tap to show the answer"}));
   sec.appendChild(card);
-  var acts=el("div",{class:"actions"});
-  if(!ui.revealed){
-    acts.appendChild(el("button",{type:"button",class:"btn primary",onclick:function(){ui.revealed=true;renderStudy();}},["Show answer ",el("span",{class:"key",text:"space"})]));
-    acts.appendChild(el("button",{type:"button",class:"btn quiet",onclick:function(){nextCard();renderStudy();},text:"Skip"}));
+  var opts=el("div",{class:"opts"});
+  ui.opts.forEach(function(o,k){
+    var cls="opt"; if(ui.pick>=0){ if(k===ui.ci) cls+=" correct"; else if(k===ui.pick) cls+=" wrong"; else cls+=" dim"; }
+    opts.appendChild(el("button",{type:"button",class:cls,disabled:ui.pick>=0,onclick:function(){pickStudy(k);}},[el("span",{class:"k",text:"ABC"[k]}),el("span",{text:o})]));
+  });
+  sec.appendChild(opts);
+  if(ui.pick>=0){
+    var ok=ui.pick===ui.ci;
+    var ex=el("div",{class:"explain"},[el("div",{class:"v "+(ok?"ok":"no"),text:ok?"Correct":"Not quite. The answer is "+"ABC"[ui.ci]+"."})]);
+    if(c.e) ex.appendChild(el("div",{text:c.e}));
+    sec.appendChild(ex);
+    sec.appendChild(explainBlock(c));
+    sec.appendChild(el("div",{class:"actions"},[el("button",{type:"button",class:"btn primary",onclick:nextStudy},["Next question ",el("span",{class:"key",text:"enter"})])]));
   } else {
-    acts.appendChild(el("button",{type:"button",class:"btn bad",onclick:function(){rate(false);}},["Missed ",el("span",{class:"key",text:"1"})]));
-    acts.appendChild(el("button",{type:"button",class:"btn good",onclick:function(){rate(true);}},["Got it ",el("span",{class:"key",text:"2"})]));
+    sec.appendChild(el("div",{class:"actions"},[el("button",{type:"button",class:"btn quiet",onclick:nextStudy,text:"Skip"})]));
   }
-  sec.appendChild(acts);
-  if(ui.revealed) sec.appendChild(explainBlock(c));
 }
-function rate(ok){ if(!ui.cur) return; mark(ui.cur,ok); ui.session.n++; if(!ok) ui.session.miss++; touch(); nextCard(); renderStudy(); renderChips(); }
+function pickStudy(k){ if(!ui.cur||ui.pick>=0) return; ui.pick=k; var ok=k===ui.ci; mark(ui.cur,ok); ui.session.n++; if(!ok) ui.session.miss++; touch(); renderStudy(); renderChips(); }
+function nextStudy(){ nextCard(); renderStudy(); window.scrollTo({top:0}); }
 function renderBrowse(sec,P){
   var list=el("div",{class:"list"});
   var labels={"new":"New","w":"Weak","l":"Learning","m":"Mastered"};
   P.forEach(function(c){
     list.appendChild(el("div",{class:"li"},[
-      el("span",{class:"tag",text:labels[cat(c)]}),
-      el("div",{},[el("div",{class:"lq",text:c.q}),el("div",{class:"la",text:c.a}),c.e?el("div",{class:"le",text:c.e}):null])
+      el("span",{class:"tag",text:labels[cat(c)]+(c.src==="faa"?" \u00b7 FAA #"+c.n:"")}),
+      el("div",{},[el("div",{class:"lq",text:c.q}),c.f?el("div",{class:"le",text:"Figure: "+c.f.map(figCaption).join("; ")}):null,el("div",{class:"la",text:c.a}),c.e?el("div",{class:"le",text:c.e}):null])
     ]));
   });
   sec.appendChild(list);
@@ -2708,7 +3196,7 @@ function renderBrowse(sec,P){
 
 /* ---------- test ---------- */
 function buildTest(n){
-  var P=CARDS.filter(function(c){return c.x&&(ui.topic<0||c.t===ui.topic);});
+  var P=CARDS.filter(function(c){return c.x&&(ui.testSrc==="faa"?c.src==="faa":(ui.topic<0||c.t===ui.topic));});
   var groups={}; P.forEach(function(c){(groups[c.t]=groups[c.t]||[]).push(c);});
   var keys=Object.keys(groups); keys.forEach(function(k){shuffle(groups[k]);});
   var picked=[];
@@ -2728,20 +3216,24 @@ function finishTest(){
   T.done=true;
   var c=T.qs.filter(function(q){return q.pick===q.ci;}).length, by={};
   T.qs.forEach(function(q){var k=TOPICS[q.c.t];by[k]=by[k]||[0,0];by[k][1]++;if(q.pick===q.ci)by[k][0]++;});
-  state.tests.push({d:Date.now(),n:T.n,c:c,topic:ui.topic<0?"All topics":TOPICS[ui.topic],by:by,secs:Math.round((Date.now()-T.start)/1000)});
+  state.tests.push({d:Date.now(),n:T.n,c:c,topic:ui.testSrc==="faa"?"FAA sample exam":(ui.topic<0?"All topics":TOPICS[ui.topic]),by:by,secs:Math.round((Date.now()-T.start)/1000)});
   if(state.tests.length>30) state.tests=state.tests.slice(-30);
   touch(); renderTest();
 }
 function renderTest(){
   var sec=document.getElementById("test"); sec.innerHTML="";
   if(!T){
-    var avail=CARDS.filter(function(c){return c.x&&(ui.topic<0||c.t===ui.topic);}).length;
+    var faa=ui.testSrc==="faa";
+    var avail=CARDS.filter(function(c){return c.x&&(faa?c.src==="faa":(ui.topic<0||c.t===ui.topic));}).length;
+    var srcSeg=el("div",{class:"seg-btns"});
+    [["all","Whole deck"],["faa","FAA sample exam"]].forEach(function(s){srcSeg.appendChild(el("button",{type:"button",class:ui.testSrc===s[0]?"on":"","aria-pressed":ui.testSrc===s[0]?"true":"false",onclick:function(){ui.testSrc=s[0];ui.testN=s[0]==="faa"?61:20;renderTest();},text:s[1]}));});
     var seg=el("div",{class:"seg-btns"});
-    [10,20,30,60].forEach(function(n){seg.appendChild(el("button",{type:"button",class:n===ui.testN?"on":"","aria-pressed":n===ui.testN?"true":"false",onclick:function(){ui.testN=n;renderTest();},text:String(n)}));});
+    (faa?[20,40,61]:[10,20,30,60]).forEach(function(n){seg.appendChild(el("button",{type:"button",class:n===ui.testN?"on":"","aria-pressed":n===ui.testN?"true":"false",onclick:function(){ui.testN=n;renderTest();},text:String(n)}));});
     var n=Math.min(ui.testN,avail);
     sec.appendChild(el("div",{class:"setup"},[
       el("h2",{text:"Practice test"}),
-      el("p",{text:"Multiple choice, three options, like the real exam. The real test is 60 questions in 2 hours 30 minutes; 70% passes. Questions come from "+(ui.topic<0?"all topics, evenly mixed":TOPICS[ui.topic])+" ("+avail+" available). Missed questions drop to Weak in the study deck."}),
+      el("p",{text:faa?"The FAA's own published sample questions for the Private Pilot Airplane test (61 questions, 16 with figures), shuffled. These are the closest thing to the real exam.":"Multiple choice, three options, like the real exam. The real test is 60 questions in 2 hours 30 minutes; 70% passes. Questions come from "+(ui.topic<0?"all topics, evenly mixed":TOPICS[ui.topic])+" ("+avail+" available). Missed questions drop to Weak in the study deck."}),
+      el("div",{},[el("div",{class:"eyebrow",text:"Question source"}),srcSeg]),
       el("div",{},[el("div",{class:"eyebrow",text:"Number of questions"}),seg]),
       el("div",{class:"actions"},[el("button",{type:"button",class:"btn primary",disabled:n===0,onclick:function(){buildTest(n);renderTest();},text:"Start "+n+"-question test"})]),
       state.tests.length?el("p",{text:"Last test: "+state.tests[state.tests.length-1].c+"/"+state.tests[state.tests.length-1].n+" ("+Math.round(100*state.tests[state.tests.length-1].c/state.tests[state.tests.length-1].n)+"%) on "+state.tests[state.tests.length-1].topic+"."}):null
@@ -2752,7 +3244,7 @@ function renderTest(){
   var q=T.qs[T.i];
   sec.appendChild(el("div",{class:"qhead"},[el("span",{text:"Question "+(T.i+1)+" of "+T.n+" · "+TOPICS[q.c.t]}),el("span",{class:"timer",id:"timer",text:fmtTime(Math.round((Date.now()-T.start)/1000))})]));
   var bar=el("div",{class:"bar"},[el("i")]); bar.firstChild.style.width=Math.round(100*T.i/T.n)+"%"; sec.appendChild(bar);
-  sec.appendChild(el("div",{class:"card answered",style:"cursor:default;min-height:0"},[el("div",{class:"q",text:q.c.q})]));
+  sec.appendChild(el("div",{class:"card answered",style:"cursor:default;min-height:0"},[q.c.src==="faa"?el("div",{},[srcBadge(q.c)]):null,figEl(q.c),el("div",{class:"q",text:q.c.q})]));
   var opts=el("div",{class:"opts"});
   q.opts.forEach(function(o,k){
     var cls="opt"; if(q.pick>=0){ if(k===q.ci) cls+=" correct"; else if(k===q.pick) cls+=" wrong"; else cls+=" dim"; }
@@ -2790,7 +3282,7 @@ function renderResults(sec){
   }
   box.appendChild(el("div",{class:"actions"},[
     el("button",{type:"button",class:"btn primary",onclick:function(){T=null;renderTest();},text:"New test"}),
-    missed.length?el("button",{type:"button",class:"btn",onclick:function(){T=null;ui.weak=true;ui.recent=[];ui.cur=null;setMode("study");},text:"Study weak cards"}):null
+    missed.length?el("button",{type:"button",class:"btn",onclick:function(){T=null;ui.weak=true;ui.recent=[];ui.cur=null;setMode("study");},text:"Practice weak questions"}):null
   ]));
   sec.appendChild(box);
 }
@@ -2844,12 +3336,13 @@ function renderAll(){
 var mb=document.querySelectorAll(".modes button"); for(var i=0;i<mb.length;i++) mb[i].addEventListener("click",function(e){setMode(e.currentTarget.getAttribute("data-mode"));});
 document.addEventListener("keydown",function(e){
   var tag=(e.target&&e.target.tagName||"").toLowerCase(); if(tag==="input"||tag==="textarea"||e.metaKey||e.ctrlKey||e.altKey) return;
+  if(document.querySelector(".overlay")) return;
+  var k={"1":0,"2":1,"3":2,"a":0,"b":1,"c":2}[e.key.toLowerCase()];
   if(ui.mode==="study"&&!ui.browse&&ui.cur){
-    if(e.key===" "||e.key==="Enter"){ if(!ui.revealed){e.preventDefault();ui.revealed=true;renderStudy();} }
-    else if(ui.revealed&&e.key==="1"){e.preventDefault();rate(false);}
-    else if(ui.revealed&&e.key==="2"){e.preventDefault();rate(true);}
+    if(ui.pick<0&&k!=null){e.preventDefault();pickStudy(k);}
+    else if(ui.pick>=0&&(e.key==="Enter"||e.key===" ")){e.preventDefault();nextStudy();}
   } else if(ui.mode==="test"&&T&&!T.done){
-    var q=T.qs[T.i], k={"1":0,"2":1,"3":2,"a":0,"b":1,"c":2}[e.key.toLowerCase()];
+    var q=T.qs[T.i];
     if(q.pick<0&&k!=null){e.preventDefault();answer(k);}
     else if(q.pick>=0&&(e.key==="Enter"||e.key===" ")){e.preventDefault();nextQ();}
   }
@@ -2861,6 +3354,7 @@ initSync();
 initSample();
 })();
 </script>
+
 
 </body>
 </html>
