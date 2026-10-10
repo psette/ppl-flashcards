@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="PPL Cards">
-<meta name="description" content="625 exam-format questions, including the FAA's official sample exam with figures, for the Private Pilot knowledge test.">
+<meta name="description" content="625 exam-format questions, including the FAA official sample exam with figures, for the Private Pilot knowledge test.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23B71C5B'/%3E%3Cpath d='M12 42 L54 22 L34 46 L30 36 Z' fill='white'/%3E%3C/svg%3E">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
 <title>Private Pilot Flashcards</title>
@@ -175,7 +175,7 @@ textarea.code{width:100%;min-height:72px;border:1px solid var(--line);border-rad
   <div class="foot">
     <p>Regulations cited are 14 CFR Parts 61 and 91, NTSB Part 830, and the AIM, as of 2026. Passing score on the FAA test is 70%: 42 of 60 questions in 2.5 hours.</p>
     <p>Progress is saved as you go. On the Progress tab you can copy a progress code to carry it to another device.</p>
-    <p>Every question is in the real test's format: three choices, one correct. Shortcuts: <b>1 2 3</b> (or A B C) pick an answer, <b>Enter</b> moves on. Figures are from the FAA testing supplement (FAA-CT-8080-2H); tap one to enlarge.</p>
+    <p>Every question is in the real test's format: three choices, one correct. Shortcuts: <b>1 2 3</b> (or A B C) pick an answer, <b>0</b> is "I don't know", <b>Enter</b> moves on. Anything you miss or don't know comes back a few questions later until you get it right. Figures are from the FAA testing supplement (FAA-CT-8080-2H); tap one to enlarge.</p>
   </div>
 </div>
 <script type="text/plain" id="deck">
@@ -3454,7 +3454,6 @@ A: Overflying Class C airspace below 10,000 feet MSL.
 X: Landing at an airport with an operating control tower. || Flying under the shelf of Class C airspace.
 E: 14 CFR 91.225. ADS-B Out is required in the airspace above Class C up to 10,000 ft MSL, in Class A, B and C, within a Mode C veil, and above 10,000 ft MSL. Flying under a Class C shelf or landing at a tower airport does not by itself require it.
 S: faa 61
-
 </script>
 <script>
 (function(){
@@ -3665,7 +3664,7 @@ function openFig(f){
 }
 
 /* ---------- ui state ---------- */
-var ui={mode:"study",topic:-1,weak:false,faa:false,browse:false,cur:null,recent:[],session:{n:0,miss:0},testN:20,testSrc:"all",opts:null,optsFor:null,ci:-1,pick:-1};
+var ui={mode:"study",topic:-1,weak:false,faa:false,browse:false,cur:null,recent:[],session:{n:0,miss:0},testN:20,testSrc:"all",opts:null,optsFor:null,ci:-1,pick:-1,requeue:[],sinceRequeue:0};
 var T=null;
 
 /* ---------- chips ---------- */
@@ -3686,6 +3685,11 @@ function renderChips(){
 function pool(){return CARDS.filter(function(c){return (ui.topic<0||c.t===ui.topic)&&(!ui.faa||c.src==="faa")&&(!ui.weak||(prog(c).s>0&&prog(c).b<=1));});}
 function nextCard(){
   var P=pool(); if(!P.length){ui.cur=null;return;}
+  if(ui.requeue.length&&ui.sinceRequeue>=3){
+    var rid=ui.requeue.shift(), rc=BYID[rid];
+    if(rc&&P.indexOf(rc)>=0){ ui.cur=rc; ui.optsFor=null; ui.pick=-1; ui.sinceRequeue=0; return; }
+  }
+  ui.sinceRequeue++;
   var cands=P.filter(function(c){return ui.recent.indexOf(c.id)<0;}); if(cands.length<Math.min(3,P.length)) cands=P;
   var ws=cands.map(function(c){var p=prog(c);return p.s===0?5:[8,4,2,1][p.b];});
   var tot=ws.reduce(function(a,b){return a+b;},0), r=Math.random()*tot, i=0;
@@ -3726,22 +3730,25 @@ function renderStudy(){
   sec.appendChild(card);
   var opts=el("div",{class:"opts"});
   ui.opts.forEach(function(o,k){
-    var cls="opt"; if(ui.pick>=0){ if(k===ui.ci) cls+=" correct"; else if(k===ui.pick) cls+=" wrong"; else cls+=" dim"; }
-    opts.appendChild(el("button",{type:"button",class:cls,disabled:ui.pick>=0,onclick:function(){pickStudy(k);}},[el("span",{class:"k",text:"ABC"[k]}),el("span",{text:o})]));
+    var cls="opt"; if(ui.pick!==-1){ if(k===ui.ci) cls+=" correct"; else if(k===ui.pick) cls+=" wrong"; else cls+=" dim"; }
+    opts.appendChild(el("button",{type:"button",class:cls,disabled:ui.pick!==-1,onclick:function(){pickStudy(k);}},[el("span",{class:"k",text:"ABC"[k]}),el("span",{text:o})]));
   });
   sec.appendChild(opts);
-  if(ui.pick>=0){
+  if(ui.pick!==-1){
     var ok=ui.pick===ui.ci;
-    var ex=el("div",{class:"explain"},[el("div",{class:"v "+(ok?"ok":"no"),text:ok?"Correct":"Not quite. The answer is "+"ABC"[ui.ci]+"."})]);
+    var ex=el("div",{class:"explain"},[el("div",{class:"v "+(ok?"ok":"no"),text:ok?"Correct":(ui.pick===-2?"The answer is "+"ABC"[ui.ci]+". It will come back in a few questions.":"Not quite. The answer is "+"ABC"[ui.ci]+". It will come back in a few questions.")})]);
     if(c.e) ex.appendChild(el("div",{text:c.e}));
     sec.appendChild(ex);
     sec.appendChild(explainBlock(c));
     sec.appendChild(el("div",{class:"actions"},[el("button",{type:"button",class:"btn primary",onclick:nextStudy},["Next question ",el("span",{class:"key",text:"enter"})])]));
   } else {
-    sec.appendChild(el("div",{class:"actions"},[el("button",{type:"button",class:"btn quiet",onclick:nextStudy,text:"Skip"})]));
+    sec.appendChild(el("div",{class:"actions"},[
+      el("button",{type:"button",class:"btn bad",onclick:function(){pickStudy(-2);}},["I don't know ",el("span",{class:"key",text:"0"})]),
+      el("button",{type:"button",class:"btn quiet",onclick:nextStudy,text:"Skip"})
+    ]));
   }
 }
-function pickStudy(k){ if(!ui.cur||ui.pick>=0) return; ui.pick=k; var ok=k===ui.ci; mark(ui.cur,ok); ui.session.n++; if(!ok) ui.session.miss++; touch(); renderStudy(); renderChips(); }
+function pickStudy(k){ if(!ui.cur||ui.pick!==-1) return; ui.pick=k; var ok=k===ui.ci; mark(ui.cur,ok); ui.session.n++; if(!ok){ ui.session.miss++; if(ui.requeue.indexOf(ui.cur.id)<0) ui.requeue.push(ui.cur.id); } touch(); renderStudy(); renderChips(); }
 function nextStudy(){ nextCard(); renderStudy(); window.scrollTo({top:0}); }
 function renderBrowse(sec,P){
   var list=el("div",{class:"list"});
@@ -3770,7 +3777,7 @@ function buildTest(n){
   T={qs:picked.map(function(c){var opts=[c.a,c.x[0],c.x[1]];var order=shuffle([0,1,2]);return {c:c,opts:order.map(function(i){return opts[i];}),ci:order.indexOf(0),pick:-1};}),i:0,start:Date.now(),done:false,n:picked.length};
 }
 function answer(k){
-  var q=T.qs[T.i]; if(q.pick>=0) return; q.pick=k; mark(q.c,k===q.ci); touch(); renderTest(); renderChips();
+  var q=T.qs[T.i]; if(q.pick!==-1) return; q.pick=k; mark(q.c,k===q.ci); touch(); renderTest(); renderChips();
 }
 function nextQ(){ if(T.i<T.n-1){T.i++;renderTest();} else finishTest(); }
 function finishTest(){
@@ -3808,19 +3815,19 @@ function renderTest(){
   sec.appendChild(el("div",{class:"card answered",style:"cursor:default;min-height:0"},[q.c.src==="faa"?el("div",{},[srcBadge(q.c)]):null,figEl(q.c),el("div",{class:"q",text:q.c.q})]));
   var opts=el("div",{class:"opts"});
   q.opts.forEach(function(o,k){
-    var cls="opt"; if(q.pick>=0){ if(k===q.ci) cls+=" correct"; else if(k===q.pick) cls+=" wrong"; else cls+=" dim"; }
-    opts.appendChild(el("button",{type:"button",class:cls,disabled:q.pick>=0,onclick:function(){answer(k);}},[el("span",{class:"k",text:"ABC"[k]}),el("span",{text:o})]));
+    var cls="opt"; if(q.pick!==-1){ if(k===q.ci) cls+=" correct"; else if(k===q.pick) cls+=" wrong"; else cls+=" dim"; }
+    opts.appendChild(el("button",{type:"button",class:cls,disabled:q.pick!==-1,onclick:function(){answer(k);}},[el("span",{class:"k",text:"ABC"[k]}),el("span",{text:o})]));
   });
   sec.appendChild(opts);
-  if(q.pick>=0){
+  if(q.pick!==-1){
     var ok=q.pick===q.ci;
-    var ex=el("div",{class:"explain"},[el("div",{class:"v "+(ok?"ok":"no"),text:ok?"Correct":"Not quite. The answer is "+"ABC"[q.ci]+"."})]);
+    var ex=el("div",{class:"explain"},[el("div",{class:"v "+(ok?"ok":"no"),text:ok?"Correct":(q.pick===-2?"The answer is "+"ABC"[q.ci]+".":"Not quite. The answer is "+"ABC"[q.ci]+".")})]);
     if(q.c.e) ex.appendChild(el("div",{text:q.c.e}));
     sec.appendChild(ex);
     sec.appendChild(explainBlock(q.c));
     sec.appendChild(el("div",{class:"actions"},[el("button",{type:"button",class:"btn primary",onclick:nextQ},[T.i<T.n-1?"Next question ":"See results ",el("span",{class:"key",text:"enter"})])]));
   } else {
-    sec.appendChild(el("div",{class:"actions"},[el("button",{type:"button",class:"btn quiet",onclick:function(){if(confirmQuit){T=null;confirmQuit=false;renderTest();}else{confirmQuit=true;renderTest();}},text:confirmQuit?"Tap again to quit this test":"Quit test"})]));
+    sec.appendChild(el("div",{class:"actions"},[el("button",{type:"button",class:"btn bad",onclick:function(){answer(-2);}},["I don't know ",el("span",{class:"key",text:"0"})]),el("button",{type:"button",class:"btn quiet",onclick:function(){if(confirmQuit){T=null;confirmQuit=false;renderTest();}else{confirmQuit=true;renderTest();}},text:confirmQuit?"Tap again to quit this test":"Quit test"})]));
   }
 }
 var confirmQuit=false;
@@ -3838,7 +3845,7 @@ function renderResults(sec){
   if(missed.length){
     box.appendChild(el("div",{class:"eyebrow",text:"Missed questions"}));
     var list=el("div",{class:"list"});
-    missed.forEach(function(q){list.appendChild(el("div",{class:"li"},[el("span",{class:"tag",text:TOPICS[q.c.t].split(" ")[0]}),el("div",{},[el("div",{class:"lq",text:q.c.q}),el("div",{class:"le",text:"You picked: "+q.opts[q.pick]}),el("div",{class:"la",text:q.c.a}),q.c.e?el("div",{class:"le",text:q.c.e}):null])]));});
+    missed.forEach(function(q){list.appendChild(el("div",{class:"li"},[el("span",{class:"tag",text:TOPICS[q.c.t].split(" ")[0]}),el("div",{},[el("div",{class:"lq",text:q.c.q}),el("div",{class:"le",text:"You picked: "+(q.pick===-2?"I don't know":q.opts[q.pick])}),el("div",{class:"la",text:q.c.a}),q.c.e?el("div",{class:"le",text:q.c.e}):null])]));});
     box.appendChild(list);
   }
   box.appendChild(el("div",{class:"actions"},[
@@ -3899,13 +3906,16 @@ document.addEventListener("keydown",function(e){
   var tag=(e.target&&e.target.tagName||"").toLowerCase(); if(tag==="input"||tag==="textarea"||e.metaKey||e.ctrlKey||e.altKey) return;
   if(document.querySelector(".overlay")) return;
   var k={"1":0,"2":1,"3":2,"a":0,"b":1,"c":2}[e.key.toLowerCase()];
+  var idk=(e.key==="0"||e.key==="?");
   if(ui.mode==="study"&&!ui.browse&&ui.cur){
-    if(ui.pick<0&&k!=null){e.preventDefault();pickStudy(k);}
-    else if(ui.pick>=0&&(e.key==="Enter"||e.key===" ")){e.preventDefault();nextStudy();}
+    if(ui.pick===-1&&k!=null){e.preventDefault();pickStudy(k);}
+    else if(ui.pick===-1&&idk){e.preventDefault();pickStudy(-2);}
+    else if(ui.pick!==-1&&(e.key==="Enter"||e.key===" ")){e.preventDefault();nextStudy();}
   } else if(ui.mode==="test"&&T&&!T.done){
     var q=T.qs[T.i];
-    if(q.pick<0&&k!=null){e.preventDefault();answer(k);}
-    else if(q.pick>=0&&(e.key==="Enter"||e.key===" ")){e.preventDefault();nextQ();}
+    if(q.pick===-1&&k!=null){e.preventDefault();answer(k);}
+    else if(q.pick===-1&&idk){e.preventDefault();answer(-2);}
+    else if(q.pick!==-1&&(e.key==="Enter"||e.key===" ")){e.preventDefault();nextQ();}
   }
 });
 
@@ -3915,6 +3925,7 @@ initSync();
 initSample();
 })();
 </script>
+
 
 
 </body>
