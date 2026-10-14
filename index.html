@@ -24,12 +24,37 @@ body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "IBM Plex Sans
 button{font:inherit;color:inherit}
 .app{max-width:780px;margin:0 auto;padding-inline:16px;padding-block:0 40px}
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:14px 8px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;border-bottom:1px solid var(--line)}
-.brand{display:flex;align-items:baseline;gap:10px;flex:1 1 auto;min-width:0}
+.brand{display:flex;align-items:baseline;gap:2px 10px;flex:1 1 auto;min-width:0;flex-wrap:wrap}
 .brand h1{margin:0;font-family:"Barlow Condensed","Arial Narrow",sans-serif;font-weight:700;font-size:26px;letter-spacing:.01em;text-transform:uppercase;white-space:nowrap}
 .brand .sub{font-size:13px;color:var(--muted);white-space:nowrap}
+@media (max-width:520px){.brand .sub{display:none}}
 .modes{display:flex;gap:4px;background:var(--surface2);border-radius:10px;padding:3px}
 .modes button{border:0;background:transparent;border-radius:8px;padding:6px 14px;font-family:"Barlow Condensed","Arial Narrow",sans-serif;font-weight:600;font-size:17px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);cursor:pointer}
 .modes button.on{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+@media (max-width:420px){.modes button{padding:6px 10px}}
+.vbtn{margin-left:auto;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px 6px 11px;font-family:"Barlow Condensed","Arial Narrow",sans-serif;font-weight:600;font-size:17px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);cursor:pointer;display:inline-flex;align-items:center;gap:7px;min-height:38px}
+.vbtn svg{width:16px;height:16px;flex:0 0 auto}
+.vbtn.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+@media (max-width:480px){.vbtn span{display:none}.vbtn{padding:6px 11px}}
+.vpanel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-block:12px 2px;display:flex;flex-direction:column;gap:10px;font-size:14px}
+.vrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.vdot{width:10px;height:10px;border-radius:50%;background:var(--new);flex:0 0 auto}
+.vdot.speak{background:var(--blue)}
+.vdot.listen{background:var(--bad);animation:vpulse 1.2s infinite}
+.vdot.paused{background:var(--warn)}
+.vdot.prime{background:var(--warn)}
+@keyframes vpulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--bad) 55%,transparent)}100%{box-shadow:0 0 0 10px transparent}}
+.vstatus{flex:1 1 160px;min-width:0;color:var(--ink);line-height:1.4}
+.vmini{border:1px solid var(--line);background:var(--surface2);border-radius:8px;padding:6px 11px;font-size:13px;font-weight:500;cursor:pointer;flex:0 0 auto;min-height:36px}
+.vmini.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.vheard{color:var(--muted);font-size:13px}
+.vheard b{color:var(--ink);font-weight:600}
+.vset{display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--line);padding-top:10px}
+.vset label{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:14px}
+.vset select{max-width:56%;font:inherit;font-size:14px;border:1px solid var(--line);border-radius:8px;padding:6px 8px;background:var(--bg);color:var(--ink)}
+.vset input[type=range]{width:56%;accent-color:var(--accent)}
+.vset input[type=checkbox]{accent-color:var(--accent);width:18px;height:18px;margin:0}
+.vset .help{font-size:13px;color:var(--muted);margin:0}
 .chips{display:flex;gap:8px;overflow-x:auto;padding-block:12px 4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .chips::-webkit-scrollbar{display:none}
 .chip{flex:0 0 auto;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:14px;cursor:pointer;display:flex;align-items:center;gap:8px}
@@ -127,7 +152,7 @@ td.num,th.num{text-align:right;white-space:nowrap}
 .danger{border-color:var(--bad);color:var(--bad)}
 .foot{margin-top:28px;font-size:13px;color:var(--muted);line-height:1.5}
 .foot p{margin:4px 0}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
 [hidden]{display:none!important}
 .btn.explain{border-color:var(--blue);color:var(--blue);text-decoration:none}
@@ -165,8 +190,10 @@ textarea.code{width:100%;min-height:72px;border:1px solid var(--line);border-rad
       <button type="button" data-mode="test" aria-pressed="false">Test</button>
       <button type="button" data-mode="progress" aria-pressed="false">Progress</button>
     </nav>
+    <button type="button" class="vbtn" id="vbtn" aria-pressed="false" aria-label="Voice mode, hands-free" title="Hands-free: reads the question, you say the answer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><path d="M12 17v4M8 21h8"/></svg><span>Voice</span></button>
   </header>
   <div class="chips" id="chips" aria-label="Topic"></div>
+  <div class="vpanel" id="vpanel" hidden></div>
   <main>
     <section id="study"></section>
     <section id="test" hidden></section>
@@ -175,6 +202,7 @@ textarea.code{width:100%;min-height:72px;border:1px solid var(--line);border-rad
   <div class="foot">
     <p>Regulations cited are 14 CFR Parts 61 and 91, NTSB Part 830, and the AIM, as of 2026. Passing score on the FAA test is 70%: 42 of 60 questions in 2.5 hours.</p>
     <p>Progress is saved as you go. On the Progress tab you can copy a progress code to carry it to another device.</p>
+    <p><b>Hands-free:</b> tap Voice (top right). It reads the question and the three answers, then listens. Say <b>A</b>, <b>B</b>, <b>C</b> or <b>I don't know</b>; also <b>repeat</b>, <b>options</b>, <b>skip</b>, <b>slower</b>, <b>faster</b>, <b>stop</b>. Keep the screen on. Works in Safari on iPhone and Chrome on Android; earbuds are fine.</p>
     <p>Every question is in the real test's format: three choices, one correct. Shortcuts: <b>1 2 3</b> (or A B C) pick an answer, <b>0</b> is "I don't know", <b>Enter</b> moves on. Anything you miss or don't know comes back a few questions later until you get it right. Figures are from the FAA testing supplement (FAA-CT-8080-2H); tap one to enlarge.</p>
   </div>
 </div>
@@ -3682,7 +3710,7 @@ function renderChips(){
 }
 
 /* ---------- study ---------- */
-function pool(){return CARDS.filter(function(c){return (ui.topic<0||c.t===ui.topic)&&(!ui.faa||c.src==="faa")&&(!ui.weak||(prog(c).s>0&&prog(c).b<=1));});}
+function pool(){return CARDS.filter(function(c){return (ui.topic<0||c.t===ui.topic)&&(!ui.faa||c.src==="faa")&&(!ui.weak||(prog(c).s>0&&prog(c).b<=1))&&!(voice.on&&voice.skipFigures&&c.f&&c.f.length);});}
 function nextCard(){
   var P=pool(); if(!P.length){ui.cur=null;return;}
   if(ui.requeue.length&&ui.sinceRequeue>=3){
@@ -3905,6 +3933,7 @@ var mb=document.querySelectorAll(".modes button"); for(var i=0;i<mb.length;i++) 
 document.addEventListener("keydown",function(e){
   var tag=(e.target&&e.target.tagName||"").toLowerCase(); if(tag==="input"||tag==="textarea"||e.metaKey||e.ctrlKey||e.altKey) return;
   if(document.querySelector(".overlay")) return;
+  if(e.key==="v"||e.key==="V"){e.preventDefault();toggleVoice();return;}
   var k={"1":0,"2":1,"3":2,"a":0,"b":1,"c":2}[e.key.toLowerCase()];
   var idk=(e.key==="0"||e.key==="?");
   if(ui.mode==="study"&&!ui.browse&&ui.cur){
@@ -3918,6 +3947,331 @@ document.addEventListener("keydown",function(e){
     else if(q.pick!==-1&&(e.key==="Enter"||e.key===" ")){e.preventDefault();nextQ();}
   }
 });
+
+
+/* ---------- voice (hands-free) ---------- */
+var SR=window.SpeechRecognition||window.webkitSpeechRecognition||null;
+var synth=("speechSynthesis" in window)?window.speechSynthesis:null;
+var VKEY="ppl-voice-v1";
+var PUBLIC_URL="https://psette.github.io/ppl-flashcards/";
+var voice={on:false,setup:false,phase:"idle",rec:null,recOk:null,rate:1,voiceURI:"",explain:"wrong",skipFigures:true,autoNext:true,
+  utt:[],lastHeard:"",silent:0,unknown:0,lock:null,resumeNeeded:false,qid:null,fbFor:null,gen:0,showSet:false,msg:"",heardLine:"",pausedWhy:""};
+function loadVoice(){try{var o=JSON.parse(localStorage.getItem(VKEY)||"{}");if(o.rate)voice.rate=Math.max(.6,Math.min(1.6,+o.rate));if(typeof o.voiceURI==="string")voice.voiceURI=o.voiceURI;if(o.explain==="always"||o.explain==="never"||o.explain==="wrong")voice.explain=o.explain;if(typeof o.skipFigures==="boolean")voice.skipFigures=o.skipFigures;if(typeof o.autoNext==="boolean")voice.autoNext=o.autoNext;}catch(e){}}
+function saveVoice(){try{localStorage.setItem(VKEY,JSON.stringify({rate:voice.rate,voiceURI:voice.voiceURI,explain:voice.explain,skipFigures:voice.skipFigures,autoNext:voice.autoNext}));}catch(e){}}
+
+/* text to speech normalisation: aviation abbreviations and METAR-style codes */
+var ABBR={VFR:"V F R",IFR:"I F R",AGL:"A G L",MSL:"M S L",ATC:"A T C",CFR:"C F R",VOR:"V O R",VORs:"V O Rs",OBS:"O B S",CDI:"C D I",CG:"C G",PIC:"P I C",CTAF:"C T A F",FSS:"F S S","ADS-B":"A D S B",ELT:"E L T",MOA:"M O A",MOAs:"M O As",GPS:"G P S",ADM:"A D M",VSI:"V S I",ASI:"A S I",DME:"D M E",TRSA:"T R S A",ADIZ:"A D I Z",DVFR:"D V F R",SVFR:"S V F R",TFR:"T F R",TFRs:"T F Rs",FDC:"F D C",FSDO:"F S D O",UTC:"U T C",ETA:"E T A",ETE:"E T E",ETD:"E T D",OAT:"O A T",POH:"P O H",AFM:"A F M",RPM:"R P M",NTSB:"N T S B",FAA:"F A A",AIM:"A I M",PHAK:"P hack",METAR:"mee tar",METARs:"mee tars",TAF:"taff",TAFs:"taffs",NOTAM:"no tam",NOTAMs:"no tams",PIREP:"pie rep",PIREPs:"pie reps",AIRMET:"air met",AIRMETs:"air mets",SIGMET:"sig met",SIGMETs:"sig mets",ATIS:"ay tiss",UNICOM:"you nee com",MULTICOM:"multi com",LAHSO:"lah so",VASI:"vah zee",PAPI:"pappy",VORTAC:"vor tack",RAIM:"raim",VOT:"V O T",NM:"nautical miles",SM:"statute miles",ft:"feet",kt:"knots",kts:"knots",lb:"pounds",lbs:"pounds",gal:"gallons",gph:"gallons per hour",mph:"miles per hour",psi:"P S I",MEL:"M E L",CFI:"C F I",LLWS:"low level wind shear",MVFR:"marginal V F R",LIFR:"low I F R",KIAS:"knots indicated airspeed",KCAS:"knots calibrated airspeed",KTAS:"knots true airspeed",TAS:"true airspeed",IAS:"indicated airspeed",CAS:"calibrated airspeed",Vx:"V X",Vy:"V Y",Va:"V A",Vne:"V N E",Vno:"V N O",Vfe:"V F E",Vso:"V S zero",Vs1:"V S one",Vs0:"V S zero",Vle:"V L E",Vlo:"V L O",Vg:"V G",VE:"V E","E6-B":"E six B",TCU:"T C U",ICAO:"I K O",IMC:"I M C",VMC:"V M C",ASOS:"A S O S",AWOS:"A W O S",ADF:"A D F",NDB:"N D B",ILS:"I L S",HIWAS:"high was",EFAS:"E fas",TWEB:"T web",MOCA:"M O C A",MEA:"M E A",CTA:"C T A",NAS:"N A S",ASR:"A S R",ARTCC:"A R T C C",TRACON:"tray con",CAT:"C A T",DUATS:"doo ats",LLZ:"L L Z",RNAV:"R nav",WAAS:"wahs",AC:"A C",AD:"A D",ADs:"A Ds",STC:"S T C",TSO:"T S O",SODA:"soda",BasicMed:"Basic Med",inHg:"inches of mercury","TO/FROM":"to from","L/D":"L over D","VOR/DME":"V O R D M E"};
+var WORDS={AUTO:1,FIVE:1,NOT:1,EXCEPT:1,FROM:1,TO:1,LEFT:1,RIGHT:1,BOTH:1,OFF:1,NO:1,HUNDRED:1,ARROW:1,FLAPS:1,ANDS:1,PARE:1,UNOS:1,TEMPO:1,FEW:1,MOD:1,SEV:1,AND:1,OR:1,THE:1,DOT:1,IN:1,ON:1,AT:1,AM:1,PM:1,ETC:1,ALL:1,ANY:1,ONLY:1,NEVER:1,ALWAYS:1,MUST:1,LEAST:1,MOST:1,FIRST:1,LAST:1,HIGH:1,LOW:1,UP:1,DOWN:1,NEG:1,LGT:1,CLR:1,SKC:1,RA:1,SN:1,FG:1,BR:1,HZ:1,FU:1,DZ:1,GR:1,PL:1,TS:1,SH:1,FC:1,VV:1,BKN:1,OVC:1,SCT:1,CB:1};
+var SPELLED={LGT:"light",CLR:"clear",SKC:"sky clear",RA:"rain",SN:"snow",FG:"fog",BR:"mist",HZ:"haze",FU:"smoke",DZ:"drizzle",GR:"hail",PL:"ice pellets",TS:"thunderstorm",SH:"showers",FC:"funnel cloud",VV:"vertical visibility",BKN:"broken",OVC:"overcast",SCT:"scattered",CB:"cumulonimbus",TSRA:"thunderstorm with rain",VCTS:"thunderstorm in the vicinity",SPECI:"special report",AUTO:"automated",VRB:"variable",NEG:"negative",UA:"U A",UUA:"urgent U A",SLP:"sea level pressure",TEMPO:"temporarily"};
+function spellOut(t){ return t.split("").map(function(ch){ return ch==="/"?"slash":ch; }).join(" "); }
+function speakable(s){
+  s=String(s==null?"":s);
+  s=s.replace(/\bin\.?\s?Hg\b/g," inches of mercury").replace(/(\d)\s?["”]\s?Hg\b/g,"$1 inches of mercury").replace(/(\d)["”](?=\s|$|[.,;])/g,"$1 inches");
+  s=s.replace(/[“”"]/g," , ").replace(/[()]/g," , ").replace(/ /g," ");
+  s=s.replace(/°\s?F\b/g," degrees Fahrenheit").replace(/°\s?C\b/g," degrees Celsius").replace(/°/g," degrees").replace(/\b1 degrees\b/g,"1 degree");
+  s=s.replace(/(\d)(SM|KT|KTS|FT|NM)\b/g,"$1 $2");
+  s=s.replace(/\b(\d+) 1\/2\b/g,"$1 and a half").replace(/\b(\d+) 1\/4\b/g,"$1 and a quarter").replace(/\b(\d+) 3\/4\b/g,"$1 and three quarters");
+  s=s.replace(/\b1\/2\b/g,"one half").replace(/\b1\/4\b/g,"one quarter").replace(/\b3\/4\b/g,"three quarters");
+  s=s.replace(/\bFL(\d{3})\b/g,function(_,d){return "flight level "+spellOut(d);});
+  s=s.replace(/\b(\d{4,6})Z\b/g,function(_,d){return spellOut(d)+" zulu";});
+  s=s.replace(/\b(\d{3,4})Z\b/g,function(_,d){return spellOut(d)+" zulu";});
+  s=s.replace(/\+(?=[A-Z]{2,}\b)/g,"heavy ");
+  s=s.replace(/\b(?=[A-Z0-9\/]*\d)(?=[A-Z0-9\/]*[A-Z])[A-Z0-9\/]{3,}\b/g,function(t){ if(/^[A-Z]+\d+$/.test(t)&&/^(FL|P|R|W|VR|IR|SR|V)\d/.test(t)&&t.length<=6) return t.replace(/^([A-Z]+)(\d+)$/,function(_,a,b){return spellOut(a)+" "+b;}); return spellOut(t); });
+  s=s.replace(/\b([A-Za-z][A-Za-z0-9\-\/]*)\b/g,function(w){ return ABBR.hasOwnProperty(w)?ABBR[w]:w; });
+  s=s.replace(/\bK[A-Z]{3}\b/g,function(t){return spellOut(t);});
+  s=s.replace(/\b([A-Z]{2,5})\b/g,function(t){ if(SPELLED[t]) return SPELLED[t]; if(WORDS[t]) return t; return spellOut(t); });
+  s=s.replace(/(\w)\/(\w)/g,"$1 $2").replace(/&/g," and ").replace(/·/g,", ");
+  s=s.replace(/\s+,/g,",").replace(/,\s*,/g,",").replace(/\s{2,}/g," ").trim().replace(/^[,\s]+/,"").replace(/[,\s]+$/,"").replace(/,\s*([.?!;:])/g,"$1");
+  return s;
+}
+function chunkify(text){
+  var out=[], parts=text.split(/(?<=[.!?;:])\s+/), cur="";
+  parts.forEach(function(p){ if(!p) return; if(cur&&(cur.length+p.length)>200){ out.push(cur); cur=p; } else cur=cur?cur+" "+p:p; });
+  if(cur) out.push(cur);
+  return out.length?out:[text];
+}
+
+/* speech output */
+function voicesList(){ try{ return synth&&synth.getVoices?synth.getVoices():[]; }catch(e){ return []; } }
+function pickVoice(){
+  var vs=voicesList(); if(!vs.length) return null;
+  if(voice.voiceURI){ for(var i=0;i<vs.length;i++) if(vs[i].voiceURI===voice.voiceURI) return vs[i]; }
+  var en=vs.filter(function(v){return /^en([-_]|$)/i.test(v.lang||"");});
+  var pref=["Samantha","Google US English","Microsoft Aria","Microsoft Jenny","Ava","Allison","Nicky","Karen","Daniel","Moira","Alex","Google UK English Female"];
+  for(var p=0;p<pref.length;p++){ for(var j=0;j<en.length;j++){ if((en[j].name||"").indexOf(pref[p])>=0) return en[j]; } }
+  for(var k=0;k<en.length;k++) if(en[k]["default"]) return en[k];
+  return en[0]||vs[0];
+}
+function vSpeak(parts,done){
+  if(!synth){ if(done) done(); return; }
+  var g=++voice.gen; voice.phase="speak"; vPanel();
+  var chunks=[]; parts.forEach(function(p){ chunkify(speakable(p)).forEach(function(c){ chunks.push(c); }); });
+  var i=0, started=false, lastEnd=0;
+  function next(){
+    if(g!==voice.gen) return;
+    if(i>=chunks.length){ voice.utt=[]; if(done) done(); return; }
+    var u=new SpeechSynthesisUtterance(chunks[i++]); u.lang="en-US"; u.rate=voice.rate; u.pitch=1; var v=pickVoice(); if(v) u.voice=v;
+    u.onstart=function(){ started=true; };
+    u.onend=function(){ if(g!==voice.gen) return; lastEnd=Date.now(); setTimeout(next,i<chunks.length?140:60); };
+    u.onerror=function(e){ if(g!==voice.gen) return; var c=e&&e.error; if(c==="interrupted"||c==="canceled") return; setTimeout(next,0); };
+    voice.utt.push(u);
+    try{ synth.speak(u); }catch(e){ setTimeout(next,0); }
+  }
+  var busy=false; try{ busy=!!(synth.speaking||synth.pending); }catch(e){}
+  if(busy){ try{ synth.cancel(); }catch(e){} setTimeout(next,80); } else next();
+  setTimeout(function(){ if(g!==voice.gen||started) return; try{ synth.resume(); }catch(e){}
+    setTimeout(function(){ if(g!==voice.gen||started) return; voice.phase="paused"; voice.pausedWhy="The browser muted speech. Tap Resume to hear the question."; vPanel(); },2500); },2500);
+}
+function vSayOnce(text){ if(!synth) return; try{ var u=new SpeechSynthesisUtterance(speakable(text)); u.lang="en-US"; u.rate=voice.rate; var v=pickVoice(); if(v) u.voice=v; voice.utt.push(u); synth.speak(u); }catch(e){} }
+
+/* speech input */
+function micAllowedByPolicy(){
+  try{ var pp=document.permissionsPolicy||document.featurePolicy; if(pp&&typeof pp.allowsFeature==="function") return pp.allowsFeature("microphone"); }catch(e){}
+  return true;
+}
+function vListen(){
+  if(!voice.on||!SR||voice.recOk===false) return;
+  var k=curKey(); if(!k||k.done) return;
+  var g=++voice.gen; var r;
+  try{ r=new SR(); }catch(e){ voice.recOk=false; vPanel(); return; }
+  r.lang="en-US"; r.interimResults=false; r.maxAlternatives=5; r.continuous=false;
+  voice.rec=r; voice.phase="listen"; vPanel();
+  var got=false;
+  r.onresult=function(e){ got=true; var alts=[]; try{ for(var i=0;i<e.results.length;i++){ var res=e.results[i]; for(var j=0;j<res.length;j++) alts.push(String(res[j].transcript||"")); } }catch(x){} vHeard(alts,g); };
+  r.onerror=function(e){ if(g!==voice.gen) return; var c=(e&&e.error)||""; if(c==="not-allowed"||c==="service-not-allowed"){ voice.recOk=false; voice.phase="idle"; vPanel(); } else if(c==="audio-capture"){ voice.recOk=false; voice.msg="No microphone found. It will read aloud; answer by tapping."; voice.phase="idle"; vPanel(); } else if(c==="network"){ voice.msg="Listening needs an internet connection."; } };
+  r.onend=function(){ if(g!==voice.gen) return; voice.rec=null; if(got||voice.recOk===false) return;
+    voice.silent++;
+    if(voice.silent>=6){ voice.phase="paused"; voice.pausedWhy="Paused after a long silence. Tap Listen to keep going."; vPanel(); return; }
+    if(voice.silent===3){ vSpeak(["Still here. Say A, B, C, or I don't know."],function(){ vListen(); }); return; }
+    setTimeout(function(){ if(g===voice.gen&&voice.on) vListen(); },200); };
+  try{ r.start(); }catch(e){ voice.rec=null; voice.phase="idle"; voice.msg="Could not start listening. Tap Listen to try again."; vPanel(); }
+}
+function vStopListening(){ try{ if(voice.rec){ voice.rec.onend=null; voice.rec.onresult=null; voice.rec.onerror=null; voice.rec.abort(); } }catch(e){} voice.rec=null; }
+var NUMW={zero:"0",one:"1",two:"2",three:"3",four:"4",five:"5",six:"6",seven:"7",eight:"8",nine:"9",ten:"10",eleven:"11",twelve:"12",fifteen:"15",twenty:"20",thirty:"30",forty:"40",fifty:"50",sixty:"60",seventy:"70",eighty:"80",ninety:"90",hundred:"hundred",thousand:"thousand"};
+var STOP={the:1,a:1,an:1,of:1,to:1,in:1,and:1,or:1,is:1,are:1,it:1,its:1,on:1,at:1,for:1,by:1,with:1,that:1,this:1,be:1,i:1,think:1,answer:1,option:1,choice:1,um:1,uh:1,letter:1,number:1};
+function toks(s){ return String(s).toLowerCase().replace(/[^a-z0-9' ]+/g," ").split(/\s+/).filter(function(w){ return w&&!STOP[w]; }).map(function(w){ return NUMW[w]||w; }); }
+function letterIndex(t){
+  if(/^(a|ay|eh|hey|aye|a\.|alpha|1|one|won|first|the first one|the first|a one)$/.test(t)) return 0;
+  if(/^(b|be|bee|bea|v|vee|bravo|2|two|to|too|second|the second one|the second)$/.test(t)) return 1;
+  if(/^(c|see|sea|si|cee|charlie|3|three|tree|third|the third one|the third)$/.test(t)) return 2;
+  var m=t.match(/^(?:(?:the )?(?:answer|option|choice|letter|number)(?: is)?|it'?s|i think(?: it'?s)?|i'?ll say|i'?ll go with|go with|pick|say|probably|maybe|the answer is)\s+(a|b|c|ay|bee|see|one|two|three|1|2|3|first|second|third)$/);
+  if(!m) m=t.match(/^(a|b|c|one|two|three|1|2|3)\s+(?:is correct|is right|is the answer)$/);
+  if(m){ var w=m[1]; if(/^(a|ay|one|1|first)$/.test(w)) return 0; if(/^(b|bee|two|2|second)$/.test(w)) return 1; return 2; }
+  return null;
+}
+function fuzzyOption(alts,opts){
+  if(!opts||!opts.length) return null;
+  function uniq(a){ var o={}, r=[]; a.forEach(function(w){ if(!o[w]){ o[w]=1; r.push(w); } }); return r; }
+  var ot=opts.map(function(o){ return uniq(toks(o)); }), best=-1, bestScore=0, second=0;
+  alts.forEach(function(a){
+    var at=uniq(toks(a)); if(!at.length) return;
+    var scores=opts.map(function(_,i){
+      var hit=0; at.forEach(function(w){ if(ot[i].indexOf(w)>=0) hit++; });
+      if(!hit||!ot[i].length) return 0;
+      var pr=hit/at.length, rc=hit/ot[i].length; return 2*pr*rc/(pr+rc);
+    });
+    scores.forEach(function(sc,i){ if(sc>bestScore){ second=bestScore; bestScore=sc; best=i; } else if(sc>second) second=sc; });
+  });
+  return (best>=0&&bestScore>=0.6&&bestScore-second>=0.2)?best:null;
+}
+function parseHeard(alts,opts,answered){
+  for(var i=0;i<alts.length;i++){
+    var t=String(alts[i]).toLowerCase().replace(/[^a-z0-9' ]+/g," ").replace(/\s+/g," ").trim();
+    if(!t) continue;
+    if(/^(stop|pause|quit|exit|end|turn off|voice off|stop listening|stop voice|stop it|that'?s enough)$/.test(t)) return {k:"stop"};
+    if(/^(repeat|again|say (that |it )?again|what|pardon|one more time|read (it |that |the question )?again|repeat (the )?question|repeat that|come again)$/.test(t)) return {k:"repeat"};
+    if(/^((read |the |repeat |repeat the )?(options|choices|answers)( again)?|what are the (options|choices))$/.test(t)) return {k:"options"};
+    if(/^(next|next question|continue|go on|moving on|move on|okay next|ok next|go|ready|got it)$/.test(t)) return {k:"next"};
+    if(/^(skip|skip it|skip this|skip this one|skip that)$/.test(t)) return {k:"skip"};
+    if(/^(slower|slow down|too fast|speak slower)$/.test(t)) return {k:"slower"};
+    if(/^(faster|speed up|too slow|speak faster)$/.test(t)) return {k:"faster"};
+    if(/^(explain|explain it|explain that|why|tell me why|explanation|why is that)$/.test(t)) return {k:"explain"};
+    if(/(don'?t know|dont know|do not know|dunno|no idea|not sure|no clue|i give up|give up|^pass$|no guess)/.test(t)) return {k:"idk"};
+    if(!answered){ var li=letterIndex(t); if(li!=null) return {k:"pick",i:li}; }
+  }
+  if(!answered){ var f=fuzzyOption(alts,opts); if(f!=null) return {k:"pick",i:f}; }
+  return null;
+}
+function vHeard(alts,g){
+  if(g!==voice.gen||!voice.on) return;
+  voice.lastHeard=(alts[0]||"").trim();
+  var k=curKey(); if(!k||k.done) return;
+  var answered=k.pick!==-1;
+  var r=parseHeard(alts,k.opts,answered);
+  voice.heardLine=voice.lastHeard?("Heard “"+voice.lastHeard+"”"+(r?" → "+describe(r):" (not understood)")):"";
+  vPanel();
+  if(!r){
+    voice.unknown++;
+    var hint=answered?"Say next, repeat, explain, or stop.":"Say A, B, C, or I don't know.";
+    vSpeak([voice.unknown>=3?"I didn't catch that. "+hint+" You can also say repeat or options.":hint],function(){ vListen(); });
+    if(voice.unknown>=3) voice.unknown=0;
+    return;
+  }
+  voice.unknown=0; voice.silent=0;
+  switch(r.k){
+    case "stop": voiceOff(); vSayOnce("Voice off."); return;
+    case "repeat": if(answered) vFeedback(k,true); else vReadQuestion(k); return;
+    case "options": vSpeak(k.opts.map(function(o,i){return "Answer "+"ABC"[i]+": "+o;}),function(){ vListen(); }); return;
+    case "next": if(answered){ vAdvance(k); } else { vSpeak(["Answer first. Say A, B, C, or I don't know, or say skip."],function(){ vListen(); }); } return;
+    case "skip": if(answered){ vAdvance(k); } else if(k.mode==="study"){ nextStudy(); } else { vSpeak(["No skipping in a test. Say A, B, C, or I don't know."],function(){ vListen(); }); } return;
+    case "slower": voice.rate=Math.max(.6,+(voice.rate-0.15).toFixed(2)); saveVoice(); vPanel(); if(answered) vFeedback(k,true); else vReadQuestion(k); return;
+    case "faster": voice.rate=Math.min(1.6,+(voice.rate+0.15).toFixed(2)); saveVoice(); vPanel(); if(answered) vFeedback(k,true); else vReadQuestion(k); return;
+    case "explain": if(answered){ vSpeak([k.c.e?k.c.e:"There is no note for this one. Tap Explain this to me on the screen for a full explanation."],function(){ vListenAfter(k); }); } else { vSpeak(["Answer first, then I can explain."],function(){ vListen(); }); } return;
+    case "idk": if(answered){ vAdvance(k); return; } if(k.mode==="study") pickStudy(-2); else answer(-2); return;
+    case "pick": if(k.mode==="study") pickStudy(r.i); else answer(r.i); return;
+  }
+}
+function describe(r){ return r.k==="pick"?"ABC"[r.i]:r.k==="idk"?"I don't know":r.k; }
+
+/* flow */
+function curKey(){
+  if(ui.mode==="study"){ if(ui.browse||!ui.cur||ui.optsFor!==ui.cur.id) return null; return {key:"s:"+ui.cur.id,c:ui.cur,opts:ui.opts,ci:ui.ci,pick:ui.pick,mode:"study"}; }
+  if(ui.mode==="test"){ if(!T) return null; if(T.done) return {key:"done:"+T.start,done:true}; var q=T.qs[T.i]; return {key:"t:"+T.i+":"+q.c.id,c:q.c,opts:q.opts,ci:q.ci,pick:q.pick,mode:"test"}; }
+  return null;
+}
+function vReadQuestion(k){
+  var parts=[], c=k.c;
+  if(c.f&&c.f.length) parts.push("This question uses "+c.f.map(figCaption).join(" and ")+". Look at the screen.");
+  parts.push(c.q);
+  k.opts.forEach(function(o,i){ parts.push("Answer "+"ABC"[i]+": "+o); });
+  voice.silent=0;
+  vSpeak(parts,function(){ vListen(); });
+}
+function vFeedback(k,repeat){
+  var ok=k.pick===k.ci, c=k.c, parts=[];
+  if(ok) parts.push("Correct."); else if(k.pick===-2) parts.push("The answer is "+"ABC"[k.ci]+": "+k.opts[k.ci]); else parts.push("Not quite. The answer is "+"ABC"[k.ci]+": "+k.opts[k.ci]);
+  if(c.e&&(voice.explain==="always"||(voice.explain==="wrong"&&!ok))) parts.push(c.e);
+  vSpeak(parts,function(){
+    if(!voice.autoNext||repeat){ vListenAfter(k); return; }
+    voice.phase="idle"; vPanel();
+    setTimeout(function(){ var now=curKey(); if(!voice.on||!now||now.key!==k.key) return; vAdvance(k); },900);
+  });
+}
+function vListenAfter(k){ voice.phase="idle"; vPanel(); vListen(); }
+function vAdvance(k){ voice.gen++; if(k.mode==="study") nextStudy(); else nextQ(); }
+function vSync(){
+  if(!voice.on||voice.setup||voice.phase==="prime") return;
+  var k=curKey();
+  if(!k){ if(voice.qid!==null){ voice.qid=null; voice.fbFor=null; vStopAll(); } vPanel(); return; }
+  if(k.done){
+    if(voice.qid!==k.key){ voice.qid=k.key; var c=T.qs.filter(function(q){return q.pick===q.ci;}).length, pct=Math.round(100*c/T.n);
+      vSpeak(["Test finished. You scored "+pct+" percent, "+c+" of "+T.n+" correct."+(pct>=70?" That is a pass.":" Below seventy percent. Keep going.")],function(){ voice.phase="idle"; vPanel(); }); }
+    return;
+  }
+  if(k.pick===-1){ if(voice.qid!==k.key){ voice.qid=k.key; voice.fbFor=null; voice.unknown=0; voice.heardLine=""; vReadQuestion(k); } return; }
+  if(voice.fbFor!==k.key){ voice.fbFor=k.key; voice.qid=k.key; vStopListening(); vFeedback(k,false); }
+}
+
+/* on / off */
+function acquireLock(){ try{ if(navigator.wakeLock&&!voice.lock) navigator.wakeLock.request("screen").then(function(l){ voice.lock=l; l.addEventListener("release",function(){ voice.lock=null; }); }).catch(function(){}); }catch(e){} }
+function releaseLock(){ try{ if(voice.lock){ voice.lock.release(); voice.lock=null; } }catch(e){} }
+function vStopAll(){ voice.gen++; vStopListening(); try{ if(synth) synth.cancel(); }catch(e){} voice.phase="idle"; voice.utt=[]; }
+function voiceOn(){
+  if(!synth){ voice.msg="This browser cannot read aloud. Try Safari on iPhone or Chrome."; vPanel(); return; }
+  voice.on=true; voice.setup=true; voice.qid=null; voice.fbFor=null; voice.msg=""; voice.heardLine=""; voice.pausedWhy=""; voice.silent=0; voice.unknown=0;
+  if(!SR) voice.recOk=false; else if(!micAllowedByPolicy()) voice.recOk=false;
+  try{ document.getElementById("vbtn").classList.add("on"); document.getElementById("vbtn").setAttribute("aria-pressed","true"); }catch(e){}
+  if(ui.mode==="study"&&!ui.browse&&voice.skipFigures&&ui.cur&&ui.cur.f&&ui.cur.f.length&&ui.pick===-1){ ui.cur=null; ui.recent=[]; renderStudy(); }
+  acquireLock(); vPanel();
+  var needPrime=(SR&&voice.recOk===null);
+  var done=false;
+  function finish(){ if(done) return; done=true; voice.setup=false; voice.phase="idle"; vSync(); }
+  vSpeak(["Voice on."],function(){
+    if(!needPrime){ finish(); return; }
+    try{
+      if(navigator.permissions&&navigator.permissions.query){
+        navigator.permissions.query({name:"microphone"}).then(function(st){ if(st&&st.state==="granted"){ voice.recOk=true; finish(); } else vPrime(finish); },function(){ vPrime(finish); });
+      } else vPrime(finish);
+    }catch(e){ vPrime(finish); }
+  });
+}
+function vPrime(finish){
+  voice.phase="prime"; vPanel();
+  var r; try{ r=new SR(); }catch(e){ voice.recOk=false; finish(); return; }
+  var g=++voice.gen; voice.rec=r; r.lang="en-US"; r.interimResults=false; r.continuous=false;
+  var ended=false;
+  function end(){ if(ended) return; ended=true; if(voice.rec===r) voice.rec=null; if(voice.recOk===null) voice.recOk=true; finish(); }
+  r.onerror=function(e){ var c=(e&&e.error)||""; if(c==="not-allowed"||c==="service-not-allowed"||c==="audio-capture") voice.recOk=false; };
+  r.onend=end; r.onresult=function(){};
+  try{ r.start(); }catch(e){ voice.recOk=false; end(); return; }
+  setTimeout(function(){ if(g===voice.gen&&!ended){ try{ r.stop(); }catch(e){} setTimeout(end,1500); } },4000);
+}
+function voiceOff(){ voice.on=false; voice.setup=false; vStopAll(); releaseLock(); voice.qid=null; voice.fbFor=null; try{ document.getElementById("vbtn").classList.remove("on"); document.getElementById("vbtn").setAttribute("aria-pressed","false"); }catch(e){} vPanel(); }
+function toggleVoice(){ if(voice.on) voiceOff(); else voiceOn(); }
+document.addEventListener("visibilitychange",function(){
+  if(document.hidden){ if(voice.on){ vStopAll(); voice.resumeNeeded=true; } }
+  else if(voice.on){ acquireLock(); if(voice.resumeNeeded){ voice.resumeNeeded=false; voice.qid=null; voice.fbFor=null; vSync(); } }
+});
+
+/* panel */
+function vPanel(){
+  var p=document.getElementById("vpanel"); if(!p) return;
+  if(!voice.on&&!voice.msg){ p.hidden=true; p.innerHTML=""; return; }
+  p.hidden=false; p.innerHTML="";
+  var ph=voice.phase, dotCls="vdot"+(ph==="speak"?" speak":ph==="listen"?" listen":ph==="paused"?" paused":ph==="prime"?" prime":"");
+  var status;
+  if(!voice.on) status=voice.msg;
+  else if(ph==="prime") status="Checking the microphone. Allow it if your phone asks.";
+  else if(ph==="speak") status="Reading aloud…";
+  else if(ph==="listen") status="Listening. Say A, B, C, or I don’t know.";
+  else if(ph==="paused") status=voice.pausedWhy||"Paused.";
+  else if(voice.recOk===false) status=(!SR?"This browser can read aloud but cannot listen. Answer by tapping.":(window.top!==window.self?"Listening is blocked inside claude.ai. For hands-free, open "+PUBLIC_URL:"Microphone blocked. Allow it for this site (Safari: tap aA in the address bar, Website Settings, Microphone), then tap Voice again."));
+  else status=(curKey()?"Voice on.":"Voice on. Go to Study or start a test.")+(voice.msg?" "+voice.msg:"");
+  var row=el("div",{class:"vrow"},[el("span",{class:dotCls,"aria-hidden":"true"}),el("span",{class:"vstatus",text:status})]);
+  if(voice.on){
+    var k=curKey();
+    if(ph==="paused") row.appendChild(el("button",{type:"button",class:"vmini primary",onclick:function(){ voice.pausedWhy=""; voice.silent=0; var kk=curKey(); if(!kk||kk.done){ voice.qid=null; vSync(); } else if(kk.pick===-1){ vReadQuestion(kk); } else { vFeedback(kk,true); } },text:"Resume"}));
+    if(k&&!k.done){
+      row.appendChild(el("button",{type:"button",class:"vmini",onclick:function(){ var kk=curKey(); if(!kk) return; voice.silent=0; if(kk.pick===-1) vReadQuestion(kk); else vFeedback(kk,true); },text:"Repeat"}));
+      if(SR&&voice.recOk!==false&&ph!=="listen"&&ph!=="prime") row.appendChild(el("button",{type:"button",class:"vmini",onclick:function(){ voice.silent=0; voice.pausedWhy=""; voice.gen++; try{ synth.cancel(); }catch(e){} vListen(); },text:"Listen"}));
+    }
+    row.appendChild(el("button",{type:"button",class:"vmini",onclick:function(){ voice.showSet=!voice.showSet; vPanel(); },text:voice.showSet?"Hide settings":"Settings","aria-expanded":voice.showSet?"true":"false"}));
+    row.appendChild(el("button",{type:"button",class:"vmini",onclick:function(){ voiceOff(); },text:"Stop"}));
+  } else row.appendChild(el("button",{type:"button",class:"vmini",onclick:function(){ voice.msg=""; vPanel(); },text:"OK"}));
+  p.appendChild(row);
+  if(voice.on&&voice.heardLine) p.appendChild(el("div",{class:"vheard",text:voice.heardLine}));
+  if(voice.on&&voice.showSet) p.appendChild(vSettings());
+}
+function vSettings(){
+  var box=el("div",{class:"vset"});
+  var rateLbl=el("span",{text:"Speed "+voice.rate.toFixed(2).replace(/0$/,"")+"×"});
+  var rate=el("input",{type:"range",min:"0.6",max:"1.6",step:"0.05",value:String(voice.rate),"aria-label":"Reading speed"});
+  rate.addEventListener("input",function(){ voice.rate=+rate.value; rateLbl.textContent="Speed "+voice.rate.toFixed(2).replace(/0$/,"")+"×"; });
+  rate.addEventListener("change",function(){ saveVoice(); });
+  box.appendChild(el("label",{},[rateLbl,rate]));
+  var sel=el("select",{"aria-label":"Voice"});
+  function fillVoices(){
+    sel.innerHTML=""; sel.appendChild(el("option",{value:"",text:"Automatic"}));
+    var vs=voicesList().filter(function(v){return /^en([-_]|$)/i.test(v.lang||"");});
+    vs.sort(function(a,b){ return (a.lang||"").localeCompare(b.lang||"")||(a.name||"").localeCompare(b.name||""); });
+    vs.forEach(function(v){ sel.appendChild(el("option",{value:v.voiceURI,text:v.name+" ("+v.lang+")"})); });
+    sel.value=voice.voiceURI; if(sel.value!==voice.voiceURI) sel.value="";
+  }
+  fillVoices(); if(synth&&"onvoiceschanged" in synth) synth.addEventListener("voiceschanged",fillVoices);
+  sel.addEventListener("change",function(){ voice.voiceURI=sel.value; saveVoice(); vSayOnce("This is how I sound."); });
+  box.appendChild(el("label",{},[el("span",{text:"Voice"}),sel]));
+  var ex=el("select",{"aria-label":"Read explanations"});
+  [["wrong","When I miss one"],["always","Always"],["never","Never"]].forEach(function(o){ ex.appendChild(el("option",{value:o[0],text:o[1]})); });
+  ex.value=voice.explain; ex.addEventListener("change",function(){ voice.explain=ex.value; saveVoice(); });
+  box.appendChild(el("label",{},[el("span",{text:"Read the explanation"}),ex]));
+  var fig=el("input",{type:"checkbox"}); fig.checked=voice.skipFigures;
+  fig.addEventListener("change",function(){ voice.skipFigures=fig.checked; saveVoice(); ui.recent=[]; if(ui.mode==="study"){ ui.cur=null; renderStudy(); } });
+  box.appendChild(el("label",{},[el("span",{text:"Skip questions that need a figure (study mode)"}),fig]));
+  var an=el("input",{type:"checkbox"}); an.checked=voice.autoNext;
+  an.addEventListener("change",function(){ voice.autoNext=an.checked; saveVoice(); });
+  box.appendChild(el("label",{},[el("span",{text:"Move on by itself after each answer"}),an]));
+  box.appendChild(el("p",{class:"help",text:"You can say: A, B, C, I don’t know, repeat, options, skip, next, explain, slower, faster, stop. Keep the screen on; the phone stops listening when it locks."}));
+  return box;
+}
+
+/* hooks into the app */
+var _renderStudy=renderStudy; renderStudy=function(){ _renderStudy(); vSync(); };
+var _renderTest=renderTest; renderTest=function(){ _renderTest(); vSync(); };
+var _renderAll=renderAll; renderAll=function(){ _renderAll(); if(ui.mode==="progress") vSync(); };
+document.getElementById("vbtn").addEventListener("click",toggleVoice);
+loadVoice();
+if(synth&&synth.getVoices){ try{ synth.getVoices(); }catch(e){} }
+window.__ppl={speakable:speakable,parseHeard:parseHeard,chunkify:chunkify,voice:voice,ui:ui,cards:CARDS,test:function(){return T;}};
 
 loadLocal();
 renderAll();
